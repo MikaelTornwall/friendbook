@@ -25,15 +25,15 @@ How to run?
 
 ## To Do
 
-[x] User registration <br>
-[] Profile picture <br>
-[x] Search <br>
-[] Friend requests <br>
-[] Accepting friend requests <br>
-[] Photo album <br>
-[] Personal wall <br>
-[] Likes <br>
-[] Comments <br>
+- [x] User registration <br>
+- [] Profile picture <br>
+- [x] Search <br>
+- [] Friend requests <br>
+- [] Accepting friend requests <br>
+- [] Photo album <br>
+- [] Personal wall <br>
+- [] Likes <br>
+- [] Comments <br>
 
 ## Contributors
 * [@MikaelTornwall](https://github.com/MikaelTornwall/) (Mikael Törnwall)
