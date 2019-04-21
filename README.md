@@ -28,10 +28,10 @@ How to run?
 - [x] User registration <br>
 - [ ] Profile picture <br>
 - [x] Search <br>
-- [ ] Friend requests <br>
-- [ ] Accepting friend requests <br>
+- [x] Friend requests <br>
+- [x] Accepting friend requests <br>
 - [ ] Photo album <br>
-- [ ] Personal wall <br>
+- [x] Personal wall <br>
 - [ ] Likes <br>
 - [ ] Comments <br>
 
