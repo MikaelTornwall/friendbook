@@ -2,7 +2,7 @@
 
 ## Description
 
-FriendBook is an old-school Facebook imitation project.
+FriendBook is an old-school Facebook -type social media project.
 
 How to run?
 
