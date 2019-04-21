@@ -1,7 +1,9 @@
 package projekti.controller;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import projekti.domain.Account;
+import projekti.domain.Post;
 import projekti.service.CustomUserDetailsService;
 import projekti.config.DevelopmentSecurityConfiguration;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PathVariable;
 import projekti.repository.UserRepository;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Pageable;
+
 
 @Controller
 public class UserController {
@@ -46,8 +52,14 @@ public class UserController {
         String username = auth.getName();        
         Account account = userRepository.findByUsername(username);                        
         model.addAttribute("myprofile", account.getIdentifier());
+
+        List<Post> posts = profile.getWall().getPosts();
+                
+        Collections.sort(posts, Collections.reverseOrder());
         
-        model.addAttribute("posts", profile.getWall().getPosts());
+        List<Post> list = posts.stream().limit(25).collect(Collectors.toList());
+        
+        model.addAttribute("posts", list);
         
         return "profile";
     }

@@ -9,12 +9,11 @@
         
         <h1>Hello Profile!</h1>
         
-        <p th:text="${profile.username}"></p>
+        Profile: <span th:text="${profile.username}"></span>
         
         <button><a th:href="@{/profiles/{identifier}/friends(identifier=${profile.identifier})}">Friends</a></button>
-        
-        <h3>Messages</h3>
-        <p>Write new message</p>
+                
+        <p>Write new post</p>
         <form th:action="@{/profiles/{identifier}/newpost (identifier=${profile.identifier})}" method="POST">            
             <textarea name="content" cols="50" rows="10"></textarea>
             <br />
@@ -24,7 +23,7 @@
         <hr />
         <h3>Posts: </h3>
         <div th:each="post : ${posts}">
-            <i th:text="${post.date}"></i>
+            <i th:text="${#temporals.format(post.date, 'dd-MM-yyyy HH:mm')}"></i>
             <div th:text="${post.content}"></div>
             By: <span th:text="${post.owner.username}"></span>            
             <br />
