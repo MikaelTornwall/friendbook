@@ -76,6 +76,8 @@ public class FriendController {
         
         List<Friend> friendRequests = friendService.getFriendRequests(identifier);
         
+        if (friendRequests.isEmpty()) model.addAttribute("norequests", "No friend requests");        
+        
         model.addAttribute("friendrequests", friendRequests);                
         model.addAttribute("date", LocalDateTime.now());        
         

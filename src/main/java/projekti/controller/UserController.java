@@ -38,12 +38,16 @@ public class UserController {
     @GetMapping("/profiles/{identifier}")
     public String getProfile(@PathVariable String identifier, Model model) {
                 
-        model.addAttribute("profile", userRepository.findByIdentifier(identifier));
+        Account profile = userRepository.findByIdentifier(identifier);
+        
+        model.addAttribute("profile", profile);        
         
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();        
         Account account = userRepository.findByUsername(username);                        
         model.addAttribute("myprofile", account.getIdentifier());
+        
+        model.addAttribute("posts", profile.getWall().getPosts());
         
         return "profile";
     }

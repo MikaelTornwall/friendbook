@@ -8,6 +8,9 @@
         <div th:replace="fragments/layout :: header(myprofile=${myprofile})"></div>
         
         <h2>Friend requests</h2>
+        
+        <div th:text="${norequests}"></div>
+        
         <div th:each="friendrequest : ${friendrequests}">
             <div th:text="${friendrequest.person.username}"></div>
             <div th:text="${friendrequest.person.name}"></div>

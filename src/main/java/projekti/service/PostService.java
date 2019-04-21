@@ -3,7 +3,8 @@ package projekti.service;
 import java.util.*;
 import java.time.LocalDateTime;
 import projekti.domain.Account;
-import projekti.domain.Friend;
+import projekti.domain.Wall;
+import projekti.domain.Post;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,15 @@ public class PostService {
     
     public void addPost(String identifier, String username, String content) {
         
+        Account owner = userRepository.findByIdentifier(identifier);
+        Account poster = userRepository.findByUsername(username);
         
+        LocalDateTime date = LocalDateTime.now();
+         
+        Wall wall = wallRepository.findByOwner(owner);
+         
+        Post newPost = new Post(wall, poster, date, content);
         
+        postRepository.save(newPost);
     }
 }

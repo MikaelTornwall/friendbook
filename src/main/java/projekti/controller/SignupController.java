@@ -2,8 +2,9 @@ package projekti.controller;
 
 import java.util.*;
 import projekti.domain.Account;
+import projekti.domain.Wall;
 import projekti.service.CustomUserDetailsService;
-import projekti.service.FriendService;
+import projekti.repository.WallRepository;
 import projekti.config.DevelopmentSecurityConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +21,7 @@ public class SignupController {
     private CustomUserDetailsService userDetailsService;
     
     @Autowired
-    private FriendService friendService;
+    private WallRepository wallRepository;
     
     @GetMapping("/signup")
     public String signupPage(Model model) {          
@@ -40,6 +41,11 @@ public class SignupController {
         account.setPassword(password);
         account.setIdentifier(identifier);                
         
+        Wall wall = new Wall();
+        wall.setOwner(account);
+        
+        account.setWall(wall);
+                
         userDetailsService.save(account);        
         
         return "redirect:/signup";

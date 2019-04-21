@@ -16,9 +16,19 @@
         <h3>Messages</h3>
         <p>Write new message</p>
         <form th:action="@{/profiles/{identifier}/newpost (identifier=${profile.identifier})}" method="POST">            
-            <textarea cols="50" rows="10"></textarea>
+            <textarea name="content" cols="50" rows="10"></textarea>
             <br />
             <input type="submit" value="New post" />
         </form>
+        
+        <hr />
+        <h3>Posts: </h3>
+        <div th:each="post : ${posts}">
+            <i th:text="${post.date}"></i>
+            <div th:text="${post.content}"></div>
+            By: <span th:text="${post.owner.username}"></span>            
+            <br />
+            <br />
+        </div>
     </body>
 </html>

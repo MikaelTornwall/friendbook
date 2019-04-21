@@ -23,7 +23,9 @@ public class PostController {
     private PostService postService;    
     
     @PostMapping("/profiles/{identifier}/newpost")
-    public String newPost(@PathVariable String identifier, @RequestParam String content) {                
+    public String newPost(@RequestParam String content, @PathVariable String identifier) {                
+        
+        System.out.println("Content: " + content);
         
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();                
