@@ -1,6 +1,7 @@
 package projekti.domain;
 
 import java.util.*;
+import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.CascadeType;
 import javax.persistence.ManyToMany;
@@ -14,19 +15,11 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
 @NoArgsConstructor @AllArgsConstructor @Data
-public class Account extends AbstractPersistable<Long> {
+public class Wall extends AbstractPersistable<Long> {
     
-    private String username;
-    private String name;
-    private String password; 
-    private String identifier;               
+    @OneToOne(cascade = CascadeType.ALL)
+    private Account owner;
     
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
-    private List<Friend> friendSet = new ArrayList<>();    
-    
-    @OneToOne(mappedBy = "owner", cascade = CascadeType.ALL)
-    private Wall wall;
-    
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "wall")
     private List<Post> posts = new ArrayList<>();
 }

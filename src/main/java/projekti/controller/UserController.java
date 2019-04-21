@@ -25,7 +25,7 @@ public class UserController {
     @GetMapping("/profiles")
     public String getProfiles(Model model) {
         
-        model.addAttribute("profiles", userRepository.findAll());
+        model.addAttribute("profiles", userRepository.findAll());                
         
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();        

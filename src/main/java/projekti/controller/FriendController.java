@@ -32,12 +32,18 @@ public class FriendController {
     @GetMapping("/profiles/{identifier}/friends")
     public String friends(@PathVariable String identifier, Model model) {
         
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();        
+        Account account = userRepository.findByUsername(username);                        
+        model.addAttribute("myprofile", account.getIdentifier());  
+        
         List<Friend> friends = friendService.getFriends(identifier);
        
         model.addAttribute("friends", friends);
         
         return "friends";
     }
+    
     @PostMapping("/profiles/{identifier}/friendrequests/accept")
     public String acceptFriendRequest(@PathVariable String identifier) {
         
@@ -45,15 +51,28 @@ public class FriendController {
         String username = auth.getName(); 
         
         friendService.acceptFriendRequest(username, identifier);
+                        
+        return "redirect:/profiles/" + username + "/friendrequests";
+    }
+    
+    @PostMapping("/profiles/{identifier}/friendrequests/decline")
+    public String declineFriendRequest(@PathVariable String identifier) {
         
-        System.out.println("username: " + username);
-        System.out.println("identifier: " + identifier);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName(); 
         
+        friendService.declineFriendRequest(username, identifier);
+                        
         return "redirect:/profiles/" + username + "/friendrequests";
     }
     
     @GetMapping("/profiles/{identifier}/friendrequests")
     public String friendRequests(@PathVariable String identifier, Model model) {
+        
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();        
+        Account account = userRepository.findByUsername(username);                        
+        model.addAttribute("myprofile", account.getIdentifier());  
         
         List<Friend> friendRequests = friendService.getFriendRequests(identifier);
         
@@ -64,7 +83,7 @@ public class FriendController {
     }
     
     @PostMapping("/profiles/add/{identifier}")
-    public String addFriend(@PathVariable String identifier) {
+    public String sendRequest(@PathVariable String identifier) {
         
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();                

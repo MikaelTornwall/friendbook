@@ -29,24 +29,22 @@ public class FriendService {
     public void sendFriendRequest(Account firstAccount, Account secondAccount) {
         
         LocalDateTime date = LocalDateTime.now();
-        
-        Friend firstFriend = new Friend(firstAccount, secondAccount, date, false);
+                
         Friend secondFriend = new Friend(secondAccount, firstAccount, date, false);
-        
-        firstAccount.getFriendSet().add(firstFriend);
+                
         secondAccount.getFriendSet().add(secondFriend);
-        
-        friendRepository.save(firstFriend);
+                
         friendRepository.save(secondFriend);
-        
-        userRepository.save(firstAccount);
+                
         userRepository.save(secondAccount);               
     }
     
     public void acceptFriendRequest(String username, String identifier) {
         
-        Account owner = userRepository.findByUsername(username);
+        Account owner = userRepository.findByUsername(username);                                
         Account person = userRepository.findByIdentifier(identifier);
+        
+        this.sendFriendRequest(owner, person);
         
         List<Friend> firstFriendList = friendRepository.findByOwner(owner);
         List<Friend> secondFriendList = friendRepository.findByOwner(person);
@@ -64,6 +62,25 @@ public class FriendService {
                 friendRepository.save(friend);
             }
         }               
+    }
+    
+    public void declineFriendRequest(String username, String identifier) {
+        
+        Account owner = userRepository.findByUsername(username);                                        
+        
+        List<Friend> firstFriendList = friendRepository.findByOwner(owner);        
+        Iterator iteraattori = firstFriendList.iterator();
+        
+        while (iteraattori.hasNext()) {
+            Friend friend = (Friend) iteraattori.next();
+            
+            if (friend.getOwner().getUsername().equals(username) && friend.getPerson().getUsername().equals(identifier)) {                
+                friend.setOwner(null);
+                friend.setPerson(null);
+                friendRepository.save(friend);
+                iteraattori.remove();
+            }
+        }                                           
     }
     
     public List<Friend> getFriendRequests(String identifier) {
