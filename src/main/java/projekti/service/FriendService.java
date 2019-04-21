@@ -1,8 +1,9 @@
 package projekti.service;
 
 import java.util.*;
+import java.time.LocalDateTime;
 import projekti.domain.Account;
-import projekti.domain.FriendList;
+import projekti.domain.Friend;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,25 +24,78 @@ public class FriendService {
     private UserRepository userRepository;
     
     @Autowired
-    private FriendRepository friendRepository;
+    private FriendRepository friendRepository;        
     
-    public void addFriend(Account firstAccount, Account secondAccount) {
-
-        FriendList firstList = firstAccount.getFriends();
-        FriendList secondList = secondAccount.getFriends();        
+    public void sendFriendRequest(Account firstAccount, Account secondAccount) {
         
-        firstList.getFriendSet().add(secondAccount);        
-        secondList.getFriendSet().add(firstAccount);
-                
-        this.save(firstList);
-        this.save(secondList);                
+        LocalDateTime date = LocalDateTime.now();
         
-        //userRepository.save(firstAccount);
-        //userRepository.save(secondAccount);
+        Friend firstFriend = new Friend(firstAccount, secondAccount, date, false);
+        Friend secondFriend = new Friend(secondAccount, firstAccount, date, false);
         
+        firstAccount.getFriendSet().add(firstFriend);
+        secondAccount.getFriendSet().add(secondFriend);
+        
+        friendRepository.save(firstFriend);
+        friendRepository.save(secondFriend);
+        
+        userRepository.save(firstAccount);
+        userRepository.save(secondAccount);               
     }
     
-    public void save(FriendList friendList) {        
-        friendRepository.save(friendList);
+    public void acceptFriendRequest(String username, String identifier) {
+        
+        Account owner = userRepository.findByUsername(username);
+        Account person = userRepository.findByIdentifier(identifier);
+        
+        List<Friend> firstFriendList = friendRepository.findByOwner(owner);
+        List<Friend> secondFriendList = friendRepository.findByOwner(person);
+        
+        for (Friend friend : firstFriendList) {
+            if (friend.getOwner().getUsername().equals(username) && friend.getPerson().getUsername().equals(identifier)) {
+                friend.setActive(true);
+                friendRepository.save(friend);
+            }
+        }
+        
+        for (Friend friend : secondFriendList) {
+            if (friend.getOwner().getUsername().equals(identifier) && friend.getPerson().getUsername().equals(username)) {
+                friend.setActive(true);
+                friendRepository.save(friend);
+            }
+        }               
     }
+    
+    public List<Friend> getFriendRequests(String identifier) {
+        
+        Account account = userRepository.findByIdentifier(identifier);
+        
+        List<Friend> friends = account.getFriendSet();
+        
+        List<Friend> friendAccounts = new ArrayList<>();
+        
+        for (Friend friend : friends) {
+            if (!friend.isActive()) {                
+                friendAccounts.add(friend);                
+            }
+        }
+        
+        return friendAccounts;
+    }
+  
+    public List<Friend> getFriends(String identifier) {
+        
+        Account account = userRepository.findByIdentifier(identifier);
+        
+        List<Friend> friends = account.getFriendSet();
+        
+        List<Friend> friendAccounts = new ArrayList<>();
+        
+        for (Friend friend : friends) {
+            if (friend.isActive()) friendAccounts.add(friend);
+        }
+        
+        return friendAccounts;
+    }
+        
 }

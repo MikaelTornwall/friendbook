@@ -2,7 +2,6 @@ package projekti.controller;
 
 import java.util.*;
 import projekti.domain.Account;
-import projekti.domain.FriendList;
 import projekti.service.CustomUserDetailsService;
 import projekti.service.FriendService;
 import projekti.config.DevelopmentSecurityConfiguration;
@@ -39,16 +38,9 @@ public class SignupController {
         account.setUsername(username);
         account.setName(name);
         account.setPassword(password);
-        account.setIdentifier(identifier);
+        account.setIdentifier(identifier);                
         
-        FriendList friendList = new FriendList();
-        
-        account.setFriends(friendList);
-        
-        friendList.setAccount(account);                
-        
-        userDetailsService.save(account);
-        friendService.save(friendList);
+        userDetailsService.save(account);        
         
         return "redirect:/signup";
     }

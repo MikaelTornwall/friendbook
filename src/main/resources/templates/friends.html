@@ -7,11 +7,11 @@
     <body>
 
         <div th:replace="fragments/layout :: header(myprofile=${myprofile})"></div>
-        <div>My friends: </div>
+        <div>Friends: </div>
         
         <div th:each="friend : ${friends}">
-            <p th:text="${friend.username}"></p>
-            <p th:text="${friend.name}"></p>
+            <p th:text="${friend.person.username}"></p>
+            <p th:text="${friend.person.name}"></p>
         </div>
     </body>
 </html>

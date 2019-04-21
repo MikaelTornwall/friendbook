@@ -1,7 +1,7 @@
 /Users/Duuni/NetBeansProjects/mooc-wepa-k19-projekti/wepa_Projekti/src/main/java/projekti/service/CustomUserDetailsService.java
+/Users/Duuni/NetBeansProjects/mooc-wepa-k19-projekti/wepa_Projekti/src/main/java/projekti/domain/Friend.java
 /Users/Duuni/NetBeansProjects/mooc-wepa-k19-projekti/wepa_Projekti/src/main/java/projekti/controller/DefaultController.java
 /Users/Duuni/NetBeansProjects/mooc-wepa-k19-projekti/wepa_Projekti/src/main/java/projekti/controller/UserController.java
-/Users/Duuni/NetBeansProjects/mooc-wepa-k19-projekti/wepa_Projekti/src/main/java/projekti/domain/FriendList.java
 /Users/Duuni/NetBeansProjects/mooc-wepa-k19-projekti/wepa_Projekti/src/main/java/projekti/controller/SignupController.java
 /Users/Duuni/NetBeansProjects/mooc-wepa-k19-projekti/wepa_Projekti/src/main/java/projekti/MyApplication.java
 /Users/Duuni/NetBeansProjects/mooc-wepa-k19-projekti/wepa_Projekti/src/main/java/projekti/repository/FriendRepository.java

@@ -1,8 +1,9 @@
 package projekti.controller;
 
 import java.util.*;
+import java.time.LocalDateTime;
 import projekti.domain.Account;
-import projekti.domain.FriendList;
+import projekti.domain.Friend;
 import projekti.service.CustomUserDetailsService;
 import projekti.service.FriendService;
 import projekti.config.DevelopmentSecurityConfiguration;
@@ -23,45 +24,55 @@ import projekti.repository.FriendRepository;
 public class FriendController {
     
     @Autowired
-    private UserRepository userRepository;
+    private UserRepository userRepository;        
     
     @Autowired
-    private FriendRepository friendRepository;
-    
-    @Autowired
-    private FriendService friendService;
+    private FriendService friendService;    
     
     @GetMapping("/profiles/{identifier}/friends")
     public String friends(@PathVariable String identifier, Model model) {
         
-        Account account = userRepository.findByIdentifier(identifier);
-        
-        FriendList friendList = account.getFriends();
-        
-        Long id = friendList.getId();
-        
-        friendList = friendRepository.getOne(id);
-        
-        List<Account> friends = friendList.getFriendSet();        
-        
+        List<Friend> friends = friendService.getFriends(identifier);
+       
         model.addAttribute("friends", friends);
         
         return "friends";
+    }
+    @PostMapping("/profiles/{identifier}/friendrequests/accept")
+    public String acceptFriendRequest(@PathVariable String identifier) {
+        
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName(); 
+        
+        friendService.acceptFriendRequest(username, identifier);
+        
+        System.out.println("username: " + username);
+        System.out.println("identifier: " + identifier);
+        
+        return "redirect:/profiles/" + username + "/friendrequests";
+    }
+    
+    @GetMapping("/profiles/{identifier}/friendrequests")
+    public String friendRequests(@PathVariable String identifier, Model model) {
+        
+        List<Friend> friendRequests = friendService.getFriendRequests(identifier);
+        
+        model.addAttribute("friendrequests", friendRequests);                
+        model.addAttribute("date", LocalDateTime.now());        
+        
+        return "friendrequests";
     }
     
     @PostMapping("/profiles/add/{identifier}")
     public String addFriend(@PathVariable String identifier) {
         
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();        
-        
-        System.out.println("Eka: " + username);
-        System.out.println("Toka: " + identifier);
+        String username = auth.getName();                
         
         Account firstAccount = userRepository.findByUsername(username);                                        
         Account secondAccount = userRepository.findByIdentifier(identifier);   
         
-        friendService.addFriend(firstAccount, secondAccount);                
+        friendService.sendFriendRequest(firstAccount, secondAccount);                
         
         return "redirect:/profiles";
     }

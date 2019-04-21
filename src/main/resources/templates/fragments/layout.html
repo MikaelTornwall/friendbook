@@ -11,10 +11,11 @@ and open the template in the editor.
     </head>
     <body>
         <div th:fragment="header(myprofile)">
-            FriendBook  
+            FriendBook              
             <a th:href="@{/}">Home</a>
             <a th:href="@{/profiles}">Profiles</a>      
             <a th:href="@{/profiles/{identifier}(identifier=${myprofile})}">My profile</a> 
+            <a th:href="@{/profiles/{identifier}/friendrequests (identifier=${myprofile})}">Friend requests</a>
             &nbsp; | &nbsp;
             <a th:href="@{/logout}">Logout</a>
             <hr />

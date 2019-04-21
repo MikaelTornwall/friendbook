@@ -1,11 +1,12 @@
 package projekti.domain;
 
 import java.util.*;
+import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.CascadeType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,13 +15,16 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
 @NoArgsConstructor @AllArgsConstructor @Data
-public class Account extends AbstractPersistable<Long> {
+public class Friend extends AbstractPersistable<Long> {        
     
-    private String username;
-    private String name;
-    private String password; 
-    private String identifier;               
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Account owner;
     
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
-    private List<Friend> friendSet = new ArrayList<>();
+    
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Account person;
+    
+    private LocalDateTime date;
+    
+    private boolean isActive;
 }
