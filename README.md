@@ -34,6 +34,7 @@ How to run?
 - [x] Personal wall <br>
 - [ ] Likes <br>
 - [ ] Comments <br>
+- [ ] UI (Bootstrap) <br>
 
 ## Contributors
 * [@MikaelTornwall](https://github.com/MikaelTornwall/) (Mikael Törnwall)
