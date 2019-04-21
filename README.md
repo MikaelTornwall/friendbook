@@ -1,7 +1,5 @@
 # FriendBook
 
----
-
 ## Description
 
 FriendBook is an old-school Facebook imitation project.
@@ -14,8 +12,6 @@ How to run?
 
 **Or open in NetBeans.**
 
----
-
 ## Feature List
 * User registration
 * Profile picture
@@ -27,21 +23,17 @@ How to run?
 * Likes (status updates, photos)
 * Comments (status updates, photos)
 
----
-
 ## To Do
 
-<input type="checkbox" /> User registration <br>
-<input type="checkbox" /> Profile picture <br>
-<input type="checkbox" /> Search <br>
-<input type="checkbox" /> Friend requests <br>
-<input type="checkbox" /> Accepting friend requests <br>
-<input type="checkbox" /> Photo album <br>
-<input type="checkbox" /> Personal wall <br>
-<input type="checkbox" /> Likes <br>
-<input type="checkbox" /> Comments <br>
-
----
+[x] User registration <br>
+[] Profile picture <br>
+[x] Search <br>
+[] Friend requests <br>
+[] Accepting friend requests <br>
+[] Photo album <br>
+[] Personal wall <br>
+[] Likes <br>
+[] Comments <br>
 
 ## Contributors
 * [@MikaelTornwall](https://github.com/MikaelTornwall/) (Mikael Törnwall)
