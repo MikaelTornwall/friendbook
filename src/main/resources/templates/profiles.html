@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Hello world</title>
+    </head>
+    <body>
+        <div th:replace="fragments/layout :: header(myprofile=${myprofile})"></div>
+        
+        <br />
+        <div>Search profiles</div>                                
+        
+        <form th:action="@{/profiles}" method="POST" >
+            <input type="text" name="username" />
+            <input type="submit" value="Search!" />
+        </form>        
+        
+        <br />
+        
+        <h2>Profiles</h2>
+        <div th:each="profile : ${profiles}">
+            <a th:href='@{/profiles/{identifier}(identifier=${profile.identifier})}'>
+            <span th:text="${profile.username}"></span> &nbsp;         
+            <span th:text="${profile.name}"></span>   
+            </a>
+            <form th:action="@{/profiles/add/{identifier}(identifier=${profile.identifier})}" method="POST">
+                <input type="submit" value="Send request" />
+            </form>
+        </div> 
+    </body>
+</html>

@@ -6,8 +6,7 @@
     </head>
     <body>
 
-        <h1 th:text="${'Hello ' + message}">Hello world</h1>
-
-
+        <div th:replace="fragments/layout :: header(myprofile=${myprofile})"></div>
+        <h1 th:text="${'Welcome to ' + brand}">Hello world</h1>           
     </body>
 </html>

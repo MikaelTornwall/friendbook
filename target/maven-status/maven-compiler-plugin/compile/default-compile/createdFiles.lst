@@ -1,3 +1,12 @@
+projekti/controller/DefaultController.class
+projekti/service/FriendService.class
+projekti/service/CustomUserDetailsService.class
+projekti/domain/FriendList.class
+projekti/controller/SignupController.class
+projekti/config/DevelopmentSecurityConfiguration.class
+projekti/domain/Account.class
 projekti/MyApplication.class
-projekti/DevelopmentSecurityConfiguration.class
-projekti/DefaultController.class
+projekti/repository/UserRepository.class
+projekti/controller/FriendController.class
+projekti/repository/FriendRepository.class
+projekti/controller/UserController.class

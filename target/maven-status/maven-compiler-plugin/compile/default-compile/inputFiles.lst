@@ -1,3 +1,12 @@
-/Users/Duuni/NetBeansProjects/mooc-wepa-k19-projekti/wepa_Projekti/src/main/java/projekti/DefaultController.java
+/Users/Duuni/NetBeansProjects/mooc-wepa-k19-projekti/wepa_Projekti/src/main/java/projekti/service/CustomUserDetailsService.java
+/Users/Duuni/NetBeansProjects/mooc-wepa-k19-projekti/wepa_Projekti/src/main/java/projekti/controller/DefaultController.java
+/Users/Duuni/NetBeansProjects/mooc-wepa-k19-projekti/wepa_Projekti/src/main/java/projekti/controller/UserController.java
+/Users/Duuni/NetBeansProjects/mooc-wepa-k19-projekti/wepa_Projekti/src/main/java/projekti/domain/FriendList.java
+/Users/Duuni/NetBeansProjects/mooc-wepa-k19-projekti/wepa_Projekti/src/main/java/projekti/controller/SignupController.java
 /Users/Duuni/NetBeansProjects/mooc-wepa-k19-projekti/wepa_Projekti/src/main/java/projekti/MyApplication.java
-/Users/Duuni/NetBeansProjects/mooc-wepa-k19-projekti/wepa_Projekti/src/main/java/projekti/DevelopmentSecurityConfiguration.java
+/Users/Duuni/NetBeansProjects/mooc-wepa-k19-projekti/wepa_Projekti/src/main/java/projekti/repository/FriendRepository.java
+/Users/Duuni/NetBeansProjects/mooc-wepa-k19-projekti/wepa_Projekti/src/main/java/projekti/controller/FriendController.java
+/Users/Duuni/NetBeansProjects/mooc-wepa-k19-projekti/wepa_Projekti/src/main/java/projekti/config/DevelopmentSecurityConfiguration.java
+/Users/Duuni/NetBeansProjects/mooc-wepa-k19-projekti/wepa_Projekti/src/main/java/projekti/service/FriendService.java
+/Users/Duuni/NetBeansProjects/mooc-wepa-k19-projekti/wepa_Projekti/src/main/java/projekti/domain/Account.java
+/Users/Duuni/NetBeansProjects/mooc-wepa-k19-projekti/wepa_Projekti/src/main/java/projekti/repository/UserRepository.java
