@@ -1,13 +1,13 @@
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head>
+    <head th:replace="fragments/layout :: head" lang="en">
         <meta charset="UTF-8" />
-        <title>Hello world</title>
+        <title>FriendBook</title>
     </head>
     <body>
         <div th:replace="fragments/layout :: header(myprofile=${myprofile})"></div>
         
-        <br />
+        <div class="container">
         <div>Search profiles</div>                                
         
         <form th:action="@{/profiles}" method="POST" >
@@ -17,20 +17,29 @@
         
         <br />
         
+        <div class="col-3">
         <h2>Profiles</h2>
         <div th:each="profile : ${profiles}">
+            <div class="card">
             <div th:if="${profile.user != true}">
                 <a th:href='@{/profiles/{identifier}(identifier=${profile.account.identifier})}'>
+                    <span th:if="${profile.account.profilePicture != null}">
+                        <img class="card-img" th:src="@{/profiles/{identifier}/photos/{id} (identifier=${profile.account.identifier}, id=${profile.account.profilePicture.id})}" width="30" />
+                    </span>
                     <span th:text="${profile.account.username}"></span> &nbsp;         
-                    <span th:text="${profile.account.name}"></span>   
+                    <!--<span th:text="${profile.account.name}"></span>-->
                 </a>
             
-                <div th:if="${profile.friend != true}">
+                <span th:if="${profile.friend != true}">
                     <form th:action="@{/profiles/add/{identifier}(identifier=${profile.account.identifier})}" method="POST">
-                        <input type="submit" value="Send request" />
+                        <input class="btn btn-primary" type="submit" value="Send request" />
                     </form>
-                </div>
+                </span>
             </div>
         </div> 
+            <br />
+        </div>
+        </div>
+        </div>
     </body>
 </html>

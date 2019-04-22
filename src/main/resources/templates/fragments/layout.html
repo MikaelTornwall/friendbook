@@ -5,25 +5,24 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head>
+    <head th:fragment="head">
         <meta charset="UTF-8" />
-        <title>Hello world</title>
+        <title>FriendBook</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
     </head>
     <body>
-        <div th:fragment="header(myprofile)">
-            <br />
-            FriendBook              
-            <a th:href="@{/home}">Home</a>
-            <a th:href="@{/profiles}">Profiles</a>      
-            <a th:href="@{/profiles/{identifier}(identifier=${myprofile})}">My profile</a> 
-            <a th:href="@{/profiles/{identifier}/photos (identifier=${myprofile})}">Photos</a>
-            <a th:href="@{/profiles/{identifier}/friendrequests (identifier=${myprofile})}">Friend requests</a>
-            <a th:href="@{/profiles/{identifier}/settings (identifier=${myprofile})}">Settings</a>
-            &nbsp; | &nbsp;
-            <a th:href="@{/logout}">Logout</a>
-            <br />
-            <br />
-            <hr />
-        </div>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="header(myprofile)">            
+            <a class="navbar-brand" th:href="@{/}">FriendBook</a>              
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" th:href="@{/home}">Home</a>      
+                <a class="nav-item nav-link" th:href="@{/profiles}">Profiles</a>      
+                <a class="nav-item nav-link" th:href="@{/profiles/{identifier}(identifier=${myprofile})}">My profile</a> 
+                <a class="nav-item nav-link" th:href="@{/profiles/{identifier}/photos (identifier=${myprofile})}">Photos</a>
+                <a class="nav-item nav-link" th:href="@{/profiles/{identifier}/friendrequests (identifier=${myprofile})}">Friend requests</a>
+                <a class="nav-item nav-link" th:href="@{/profiles/{identifier}/settings (identifier=${myprofile})}">Settings</a>            
+                <a class="nav-item nav-link ml-5" th:href="@{/logout}">Logout</a>            
+            </div>                        
+        </nav>
     </body>
 </html>

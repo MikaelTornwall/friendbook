@@ -1,12 +1,13 @@
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head>
+    <head th:replace="fragments/layout :: head" lang="en">                
         <meta charset="UTF-8" />
         <title th:text="${profile.username}"></title>
     </head>
     <body>
         <div th:replace="fragments/layout :: header(myprofile=${myprofile})"></div>
         
+        <div class="container">
         <h1>Hello Profile!</h1>
                 
         <div th:if="${profile.profilePicture != null}">            
@@ -16,10 +17,9 @@
         Profile: <span th:text="${profile.username}"></span>
         
         <button><a th:href="@{/profiles/{identifier}/friends(identifier=${profile.identifier})}">Friends</a></button>        
-        
-        <p>Write new post</p>
+                
         <form th:action="@{/profiles/{identifier}/newpost (identifier=${profile.identifier})}" method="POST">            
-            <textarea name="content" cols="50" rows="10"></textarea>
+            <textarea name="content" cols="50" rows="7" placeholder="What's on your mind?"></textarea>
             <br />
             <input type="submit" value="New post" />
         </form>
@@ -52,6 +52,7 @@
             </div>
             <br />
             <br />  
+        </div>
         </div>
     </body>
 </html>
