@@ -1,6 +1,9 @@
 projekti/controller/DefaultController.class
+projekti/controller/PhotoController.class
 projekti/domain/Post.class
 projekti/repository/WallRepository.class
+projekti/domain/PhotoAlbum.class
+projekti/domain/Photo.class
 projekti/controller/SignupController.class
 projekti/domain/Wall.class
 projekti/MyApplication.class
@@ -8,6 +11,8 @@ projekti/domain/Friend.class
 projekti/repository/PostRepository.class
 projekti/controller/FriendController.class
 projekti/repository/FriendRepository.class
+projekti/repository/PhotoRepository.class
+projekti/service/PhotoService.class
 projekti/controller/UserController.class
 projekti/service/FriendService.class
 projekti/service/PostService.class
@@ -16,3 +21,4 @@ projekti/config/DevelopmentSecurityConfiguration.class
 projekti/controller/PostController.class
 projekti/domain/Account.class
 projekti/repository/UserRepository.class
+projekti/repository/PhotoAlbumRepository.class

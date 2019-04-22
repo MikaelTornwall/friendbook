@@ -5,8 +5,12 @@
         <title>Hello world</title>
     </head>
     <body>
-
-        <div th:replace="fragments/layout :: header(myprofile=${myprofile})"></div>
+        
+        <a th:href="@{/login}">Login</a>
+        <a th:href="@{/signup}">Signup</a>
+        <hr />
+        <br />
         <h1 th:text="${'Welcome to ' + brand}">Hello world</h1>           
+        <p>Welcome to the homepage of FriendBook</p>
     </body>
 </html>

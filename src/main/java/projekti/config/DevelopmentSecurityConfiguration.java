@@ -27,10 +27,12 @@ public class DevelopmentSecurityConfiguration extends WebSecurityConfigurerAdapt
         
         http.authorizeRequests()            
             .antMatchers("/h2-console", "/h2-console/**").permitAll()
-            .antMatchers("/signup").permitAll()
+            .antMatchers("/").permitAll()
+            .antMatchers("/signup").permitAll()            
             .antMatchers("*").hasAnyAuthority("USER")              
             .anyRequest().authenticated().and()
-            .formLogin().permitAll().and()
+            .formLogin().defaultSuccessUrl("/home")
+            .permitAll().and()
             .logout().permitAll();
     }
     

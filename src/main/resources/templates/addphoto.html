@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Hello world</title>
+    </head>
+    <body>
+        <div th:replace="fragments/layout :: header(myprofile=${myprofile})"></div>
+        
+        <div>Add photo</div>
+        <br />
+        <form th:action="@{/profiles/{identifier}/photos/add (identifier=${myprofile})}" enctype="multipart/form-data" method="POST">
+            <input type="file" name="file" />
+            <br />
+            <br />
+            <div>Description</div>
+            <textarea name="description" cols="30" rows="3"></textarea>
+            <br />
+            <input type="submit" value="Add" />
+        </form>
+    </body>
+</html>

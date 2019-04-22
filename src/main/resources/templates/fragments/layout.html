@@ -11,13 +11,17 @@ and open the template in the editor.
     </head>
     <body>
         <div th:fragment="header(myprofile)">
+            <br />
             FriendBook              
-            <a th:href="@{/}">Home</a>
+            <a th:href="@{/home}">Home</a>
             <a th:href="@{/profiles}">Profiles</a>      
             <a th:href="@{/profiles/{identifier}(identifier=${myprofile})}">My profile</a> 
+            <a th:href="@{/profiles/{identifier}/photos (identifier=${myprofile})}">Photos</a>
             <a th:href="@{/profiles/{identifier}/friendrequests (identifier=${myprofile})}">Friend requests</a>
             &nbsp; | &nbsp;
             <a th:href="@{/logout}">Logout</a>
+            <br />
+            <br />
             <hr />
         </div>
     </body>

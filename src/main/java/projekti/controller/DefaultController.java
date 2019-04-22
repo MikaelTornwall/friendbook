@@ -17,6 +17,13 @@ public class DefaultController {
             
     @GetMapping("*")
     public String helloWorld(Model model) { 
+        model.addAttribute("brand", "FriendBook!");                
+        
+        return "index";
+    }
+    
+    @GetMapping("/home")
+    public String home(Model model) { 
         model.addAttribute("brand", "FriendBook!");
         
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -24,7 +31,7 @@ public class DefaultController {
         Account account = userRepository.findByUsername(username);                        
         model.addAttribute("myprofile", account.getIdentifier());
         
-        return "index";
+        return "home";
     }
         
 }

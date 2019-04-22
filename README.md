@@ -30,7 +30,7 @@ How to run?
 - [x] Search <br>
 - [x] Friend requests <br>
 - [x] Accepting friend requests <br>
-- [ ] Photo album <br>
+- [x] Photo album <br>
 - [x] Personal wall <br>
 - [ ] Likes <br>
 - [ ] Comments <br>

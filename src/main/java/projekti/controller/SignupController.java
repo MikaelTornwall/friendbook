@@ -3,6 +3,7 @@ package projekti.controller;
 import java.util.*;
 import projekti.domain.Account;
 import projekti.domain.Wall;
+import projekti.domain.PhotoAlbum;
 import projekti.service.CustomUserDetailsService;
 import projekti.repository.WallRepository;
 import projekti.config.DevelopmentSecurityConfiguration;
@@ -18,10 +19,7 @@ import projekti.repository.UserRepository;
 public class SignupController {
     
     @Autowired
-    private CustomUserDetailsService userDetailsService;
-    
-    @Autowired
-    private WallRepository wallRepository;
+    private CustomUserDetailsService userDetailsService;    
     
     @GetMapping("/signup")
     public String signupPage(Model model) {          
@@ -45,6 +43,11 @@ public class SignupController {
         wall.setOwner(account);
         
         account.setWall(wall);
+        
+        PhotoAlbum photoAlbum = new PhotoAlbum();
+        photoAlbum.setOwner(account);
+        
+        account.setPhotoAlbum(photoAlbum);
                 
         userDetailsService.save(account);        
         

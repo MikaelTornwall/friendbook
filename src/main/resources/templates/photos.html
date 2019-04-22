@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Hello world</title>
+    </head>
+    <body>
+        <div th:replace="fragments/layout :: header(myprofile=${myprofile})"></div>
+        
+        <div>Photos</div>
+        <div>
+            <a th:href="@{/profiles/{identifier}/photos/add (identifier=${myprofile})}">Add photo</a>
+        </div>
+        
+        <h3>Album</h3>
+        <div th:each="photo : ${photos}">
+            <img th:src="@{/profiles/{identifier}/photos/{id} (identifier=${profile}, id=${photo.id})}" th:alt="${photo.description}" width="500" />
+            <br />
+            <i th:text="${photo.description}"></i>
+            <br />
+            <br />
+        </div>
+    </body>
+</html>

@@ -14,7 +14,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
 @NoArgsConstructor @AllArgsConstructor @Data
-public class Account extends AbstractPersistable<Long> {
+public class Account extends AbstractPersistable<Long> {   
     
     private String username;
     private String name;
@@ -29,4 +29,7 @@ public class Account extends AbstractPersistable<Long> {
     
     @OneToMany(mappedBy = "owner")
     private List<Post> posts = new ArrayList<>();
+    
+    @OneToOne(mappedBy = "owner", cascade = CascadeType.ALL)
+    private PhotoAlbum photoAlbum;    
 }
