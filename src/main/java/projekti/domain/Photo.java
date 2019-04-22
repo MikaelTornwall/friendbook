@@ -31,4 +31,8 @@ public class Photo extends AbstractPersistable<Long> {
     private List<PostLike> likeList = new ArrayList<>();
     
     private Integer likes;
+    
+    @OneToMany
+    private List<Comment> comments = new ArrayList<>();
+
 }

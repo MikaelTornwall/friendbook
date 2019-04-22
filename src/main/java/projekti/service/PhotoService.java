@@ -7,6 +7,7 @@ import projekti.domain.Account;
 import projekti.domain.Photo;
 import projekti.domain.PhotoAlbum;
 import projekti.domain.PostLike;
+import projekti.domain.Comment;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import projekti.repository.UserRepository;
 import projekti.repository.PhotoRepository;
 import projekti.repository.PhotoAlbumRepository;
 import projekti.repository.PostLikeRepository;
+import projekti.repository.CommentRepository;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -37,6 +39,9 @@ public class PhotoService {
     
     @Autowired
     private PostLikeRepository postLikeRepository;
+    
+    @Autowired
+    private CommentRepository commentRepository;
     
     public void addPhoto(MultipartFile file, String description, Account account) {                
         
@@ -76,6 +81,22 @@ public class PhotoService {
         photo.setLikes(photo.getLikes() + 1);      
         
         postLikeRepository.save(newLike);
+        photoRepository.save(photo);                                        
+    }
+    
+    public void comment(String username, Long id, String comment) {
+        
+        Account account = userRepository.findByUsername(username);                
+        
+        Photo photo = photoRepository.getOne(id);                        
+                
+        LocalDateTime datetime = LocalDateTime.now();
+        
+        Comment newComment = new Comment(account, comment, datetime);
+        
+        photo.getComments().add(newComment);        
+        
+        commentRepository.save(newComment);
         photoRepository.save(photo);                                        
     }
     

@@ -89,6 +89,19 @@ public class PhotoController {
         
         return "redirect:/profiles/" + identifier + "/photos";
     }
+    
+    @PostMapping("/profiles/{identifier}/photos/{id}/comment")
+    public String comment(@PathVariable String identifier, @PathVariable Long id, @RequestParam String comment) {
+        
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();   
+        
+        System.out.println("Comment: " + comment);
+        
+        photoService.comment(username, id, comment);
+        
+        return "redirect:/profiles/" + identifier + "/photos";
+    }
      
     @PostMapping("/profiles/{identifier}/photos/{id}/delete")
     public String deletePhoto(@PathVariable String identifier, @PathVariable Long id) {                
