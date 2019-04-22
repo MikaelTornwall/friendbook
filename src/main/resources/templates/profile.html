@@ -2,14 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8" />
-        <title>Hello world</title>
+        <title th:text="${profile.username}"></title>
     </head>
     <body>
         <div th:replace="fragments/layout :: header(myprofile=${myprofile})"></div>
         
         <h1>Hello Profile!</h1>
-        
-        
+                
         <div th:if="${profile.profilePicture != null}">            
             <img th:src="@{/profiles/{identifier}/photos/{id} (identifier=${profile.identifier}, id=${profile.profilePicture.id})}" width="200" />
         </div>
@@ -28,11 +27,31 @@
         <hr />
         <h3>Posts: </h3>
         <div th:each="post : ${posts}">
+            
             <i th:text="${#temporals.format(post.date, 'dd-MM-yyyy HH:mm')}"></i>
+            
             <div th:text="${post.content}"></div>
-            By: <span th:text="${post.owner.username}"></span>            
+            
+            By: <span th:text="${post.owner.username}"></span>  
+            
+            <form th:action="@{/profiles/{identifier}/post/{id}/like (identifier=${profile.identifier}, id=${post.id})}" method="POST">
+                Like: <input type="submit" th:value="${post.likes}" />
+            </form>
+            
+            <form th:action="@{/profiles/{identifier}/post/{id}/comment (identifier=${profile.identifier}, id=${post.id})}" method="POST">
+                Write a comment: <textarea rows="1" cols="30" name="comment"></textarea>
+                <input type="submit" value="Comment" />
+            </form>
+            
+            <div>Comments: </div>
+            <div th:each="comment : ${post.comments}">
+                <span th:text="${#temporals.format(comment.datetime, 'dd-MM-yyyy HH:mm')}"></span>
+                &nbsp;
+                <span th:text="${comment.commenter.username}"></span>
+                <div th:text="${comment.content}"></div>
+            </div>
             <br />
-            <br />
+            <br />  
         </div>
     </body>
 </html>

@@ -79,19 +79,29 @@ public class PhotoController {
         return "redirect:/profiles/" + username + "/photos";
     }
     
-     @PostMapping("/profiles/{identifier}/photos/{id}/delete")
-    public String deletePhoto(@PathVariable String identifier, @PathVariable Long id) {                
+    @PostMapping("/profiles/{identifier}/photos/{id}/like")
+    public String like(@PathVariable String identifier, @PathVariable Long id) {
         
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();                   
-        Account account = userRepository.findByUsername(username);     
+        String username = auth.getName();   
         
-        photoService.deletePhoto(id);
+        photoService.like(username, id);
         
+        return "redirect:/profiles/" + identifier + "/photos";
+    }
+     
+    @PostMapping("/profiles/{identifier}/photos/{id}/delete")
+    public String deletePhoto(@PathVariable String identifier, @PathVariable Long id) {                
+                        
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();                           
+        Account account = userRepository.findByUsername(username);
         
+        if (!identifier.equals(account.getIdentifier())) return "redirect:/profiles/" + identifier + "/photos";
         
+        photoService.deletePhoto(id);                        
         
-        return "redirect:/profiles/" + username + "/photos";
+        return "redirect:/profiles/" + identifier + "/photos";
     }
     
     @GetMapping("/profiles/{identifier}/selectprofilepicture")

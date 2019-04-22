@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <title th:text="${profile.username}"></title>
+    </head>
+    <body>
+        <div th:replace="fragments/layout :: header(myprofile=${myprofile})"></div>
+        
+        <div>
+            <h2>Settings</h2>
+            <a th:href="@{/profiles/{identifier}/selectprofilepicture}">Change profile picture</a>
+            <br />
+            <br />
+            <a th:href="@{/profiles/{identifier}/photos/add}">Add photos</a>
+            <br />
+            <br />
+            <a th:href="@{/profiles/mikael/friendrequests}">Manage friend requests</a>
+        </div>
+    </body>
+</html>

@@ -17,18 +17,8 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor @AllArgsConstructor @Data
-public class Photo extends AbstractPersistable<Long> {
+public class PostLike extends AbstractPersistable<Long> {
     
-    @ManyToOne
-    private PhotoAlbum photoAlbum;
-    
-    @Lob
-    private byte[] content;
-    
-    private String description;    
-    
-    @OneToMany
-    private List<PostLike> likeList = new ArrayList<>();
-    
-    private Integer likes;
+    @OneToOne//(cascade = CascadeType.ALL)
+    private Account liker;        
 }

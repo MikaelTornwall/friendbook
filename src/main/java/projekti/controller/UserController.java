@@ -81,4 +81,19 @@ public class UserController {
         
         return "profiles";
     }
+    
+    @GetMapping("/profiles/{identifier}/settings")
+    public String settings(@PathVariable String identifier, Model model) {
+        
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();        
+        Account account = userRepository.findByUsername(username);  
+        
+        if (!identifier.equals(account.getIdentifier())) return "redirect:/profiles/" + identifier;
+        
+        model.addAttribute("profile", account);
+        model.addAttribute("myprofile", account.getIdentifier());
+        
+        return "settings";
+    }
 }

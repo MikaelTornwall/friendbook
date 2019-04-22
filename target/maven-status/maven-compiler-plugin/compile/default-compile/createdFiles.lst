@@ -2,6 +2,7 @@ projekti/controller/DefaultController.class
 projekti/controller/PhotoController.class
 projekti/domain/Post.class
 projekti/repository/WallRepository.class
+projekti/domain/Like.class
 projekti/domain/PhotoAlbum.class
 projekti/domain/Photo.class
 projekti/controller/SignupController.class
@@ -17,6 +18,7 @@ projekti/controller/UserController.class
 projekti/service/FriendService.class
 projekti/service/PostService.class
 projekti/service/CustomUserDetailsService.class
+projekti/repository/LikeRepository.class
 projekti/config/DevelopmentSecurityConfiguration.class
 projekti/controller/PostController.class
 projekti/domain/Account.class

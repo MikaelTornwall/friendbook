@@ -32,7 +32,7 @@ How to run?
 - [x] Accepting friend requests <br>
 - [x] Photo album <br>
 - [x] Personal wall <br>
-- [ ] Likes <br>
+- [x] Likes <br>
 - [ ] Comments <br>
 - [ ] UI (Bootstrap) <br>
 

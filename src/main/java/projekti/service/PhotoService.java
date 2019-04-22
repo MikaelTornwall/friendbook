@@ -6,6 +6,7 @@ import java.io.IOException;
 import projekti.domain.Account;
 import projekti.domain.Photo;
 import projekti.domain.PhotoAlbum;
+import projekti.domain.PostLike;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import projekti.repository.UserRepository;
 import projekti.repository.PhotoRepository;
 import projekti.repository.PhotoAlbumRepository;
+import projekti.repository.PostLikeRepository;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -32,6 +34,9 @@ public class PhotoService {
     
     @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    private PostLikeRepository postLikeRepository;
     
     public void addPhoto(MultipartFile file, String description, Account account) {                
         
@@ -54,7 +59,34 @@ public class PhotoService {
         photoRepository.save(newPhoto);
     }
     
-    public void deletePhoto(Long id) {        
+    public void like(String username, Long id) {
+        
+        Account account = userRepository.findByUsername(username);                
+        
+        Photo photo = photoRepository.getOne(id);        
+        
+        List<PostLike> likers = photo.getLikeList();
+        
+        for (PostLike like : likers) {
+            if (like.getLiker().getUsername().equals(username)) return;
+        }             
+        
+        PostLike newLike = new PostLike(account);        
+        likers.add(newLike);
+        photo.setLikes(photo.getLikes() + 1);      
+        
+        postLikeRepository.save(newLike);
+        photoRepository.save(photo);                                        
+    }
+    
+    public void deletePhoto(Long id) {      
+        
+        Photo photo = photoRepository.getOne(id);                        
+                
+        photo.setLikeList(new ArrayList<>());
+        
+        photoRepository.save(photo);
+        
         photoRepository.deleteById(id);        
     }
     

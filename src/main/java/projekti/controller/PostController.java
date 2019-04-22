@@ -23,19 +23,37 @@ public class PostController {
     private PostService postService;    
     
     @PostMapping("/profiles/{identifier}/newpost")
-    public String newPost(@RequestParam String content, @PathVariable String identifier) {                
-        
-        System.out.println("Content: " + content);
+    public String post(@RequestParam String content, @PathVariable String identifier) {                        
         
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();                
         
-        postService.addPost(identifier, username, content);
-        
-        System.out.println("Profile: " + identifier);
-        System.out.println("My account: " + username);
+        postService.addPost(identifier, username, content);                
         
         return "redirect:/profiles/" + identifier;
     }
+ 
+    @PostMapping("/profiles/{identifier}/post/{id}/like")
+    public String like(@PathVariable String identifier, @PathVariable Long id) {
+        
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();                
+                
+        postService.like(username, id);
+        
+        return "redirect:/profiles/" + identifier;
+    }
+    
+    @PostMapping("/profiles/{identifier}/post/{id}/comment")
+    public String comment(@PathVariable String identifier, @PathVariable Long id, @RequestParam String comment) {
+        
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();                
+                
+        postService.comment(username, id, comment);
+        
+        return "redirect:/profiles/" + identifier;
+    }
+    
     
 }

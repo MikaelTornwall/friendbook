@@ -36,5 +36,5 @@ public class Account extends AbstractPersistable<Long> {
     private List<Post> posts = new ArrayList<>();
     
     @OneToOne(mappedBy = "owner", cascade = CascadeType.ALL)
-    private PhotoAlbum photoAlbum;    
+    private PhotoAlbum photoAlbum;            
 }

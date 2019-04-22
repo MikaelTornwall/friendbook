@@ -27,6 +27,14 @@ public class Post extends AbstractPersistable<Long> implements Comparable<Post> 
 
     private String content;
     
+    @OneToMany
+    private List<PostLike> likeList = new ArrayList<>();
+    
+    private Integer likes;    
+        
+    @OneToMany
+    private List<Comment> comments = new ArrayList<>();
+    
     @Override
     public int compareTo(Post verrattava) {
         if (this.date.isAfter(verrattava.date)) {
