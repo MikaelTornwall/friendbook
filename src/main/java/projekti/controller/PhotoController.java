@@ -35,10 +35,12 @@ public class PhotoController {
         String username = auth.getName();           
         Account account = userRepository.findByUsername(username);                        
         model.addAttribute("myprofile", account.getIdentifier());  
-        
+                        
         model.addAttribute("profile", identifier);
         
-        List<Photo> photos = account.getPhotoAlbum().getPhotos();
+        Account profile = userRepository.findByIdentifier(identifier);
+        
+        List<Photo> photos = profile.getPhotoAlbum().getPhotos();
         
         model.addAttribute("photos", photos);
         
@@ -56,6 +58,7 @@ public class PhotoController {
         return "addphoto";
     }
     
+    
     @GetMapping(path = "/profiles/{identifier}/photos/{id}", produces = "image/png")
     @ResponseBody
     public byte[] get(@PathVariable String identifier, @PathVariable Long id) {                
@@ -67,12 +70,26 @@ public class PhotoController {
         
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();                   
+        
         Account account = userRepository.findByUsername(username);     
         // if (identifier != username) return "photos";
-        
-        System.out.println("Description: " + description);
-        
+               
         photoService.addPhoto(file, description, account);
+        
+        return "redirect:/profiles/" + username + "/photos";
+    }
+    
+     @PostMapping("/profiles/{identifier}/photos/{id}/delete")
+    public String deletePhoto(@PathVariable String identifier, @PathVariable Long id) {                
+        
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();                   
+        Account account = userRepository.findByUsername(username);     
+        
+        photoService.deletePhoto(id);
+        
+        
+        
         
         return "redirect:/profiles/" + username + "/photos";
     }

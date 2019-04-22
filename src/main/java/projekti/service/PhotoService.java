@@ -33,11 +33,13 @@ public class PhotoService {
     @Autowired
     private UserRepository userRepository;
     
-    public void addPhoto(MultipartFile file, String description, Account account) {
-        
-        Photo newPhoto = new Photo();
+    public void addPhoto(MultipartFile file, String description, Account account) {                
         
         PhotoAlbum album = account.getPhotoAlbum();
+        
+        if (album.getPhotos().size() > 10) return;
+        
+        Photo newPhoto = new Photo();
         
         try {
             newPhoto.setContent(file.getBytes());
@@ -50,6 +52,10 @@ public class PhotoService {
         newPhoto.setPhotoAlbum(album);
         
         photoRepository.save(newPhoto);
+    }
+    
+    public void deletePhoto(Long id) {        
+        photoRepository.deleteById(id);        
     }
     
     public byte[] getPhoto(Long id) {

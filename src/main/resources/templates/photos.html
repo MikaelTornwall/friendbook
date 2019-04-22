@@ -17,8 +17,11 @@
             <img th:src="@{/profiles/{identifier}/photos/{id} (identifier=${profile}, id=${photo.id})}" th:alt="${photo.description}" width="500" />
             <br />
             <i th:text="${photo.description}"></i>
-            <br />
-            <br />
+            <div th:if="${myprofile} == ${photo.photoAlbum.owner.identifier}">
+                <form th:action="@{/profiles/{identifier}/photos/{id}/delete (identifier=${profile}, id=${photo.id})}" method="POST">
+                    <input type="submit" value="Delete" />
+                </form>
+            </div>
         </div>
     </body>
 </html>
