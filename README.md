@@ -33,7 +33,7 @@ How to run?
 - [x] Photo album <br>
 - [x] Personal wall <br>
 - [x] Likes <br>
-- [ ] Comments <br>
+- [x] Comments <br>
 - [ ] UI (Bootstrap) <br>
 
 ## Contributors
