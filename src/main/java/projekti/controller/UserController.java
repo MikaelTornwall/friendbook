@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import projekti.domain.Account;
 import projekti.domain.Post;
 import projekti.service.CustomUserDetailsService;
+import projekti.service.ProfileService;
 import projekti.config.DevelopmentSecurityConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,10 +29,13 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
     
+    @Autowired
+    private ProfileService profileService;
+    
     @GetMapping("/profiles")
-    public String getProfiles(Model model) {
+    public String getProfiles(Model model) {                
         
-        model.addAttribute("profiles", userRepository.findAll());                
+        model.addAttribute("profiles", profileService.profiles());                
         
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();        
@@ -67,17 +71,12 @@ public class UserController {
     @PostMapping("/profiles")
     public String search(@RequestParam String username, Model model) {
         
-        List<Account> allUsers = userRepository.findAll();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();        
+        Account account = userRepository.findByUsername(name);                        
+        model.addAttribute("myprofile", account.getIdentifier());
         
-        List<Account> foundUsers = new ArrayList<>();
-        
-        for (Account account : allUsers) {
-            if (account.getName().contains(username) || account.getUsername().contains(username)) {
-                foundUsers.add(account);
-            }
-        }
-        
-        model.addAttribute("profiles", foundUsers);
+        model.addAttribute("profiles", profileService.profiles(username));
         
         return "profiles";
     }
