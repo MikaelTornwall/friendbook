@@ -1,5 +1,6 @@
 package projekti.controller;
 
+import java.util.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,15 @@ public class DefaultController {
             
     @GetMapping("*")
     public String helloWorld(Model model) { 
+        
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();        
+        List<Account> list = userRepository.findListByUsername(username);
+        
+        if (!list.isEmpty()) {
+            return "redirect:/home";
+        }
+        
         model.addAttribute("brand", "FriendBook!");                
         
         return "index";
