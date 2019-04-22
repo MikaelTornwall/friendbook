@@ -55,4 +55,8 @@ public class PhotoService {
     public byte[] getPhoto(Long id) {
         return photoRepository.getOne(id).getContent();
     }
+    
+    public Photo getPhotoEntity(Long id) {
+        return photoRepository.getOne(id);
+    }
 }

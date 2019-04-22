@@ -44,7 +44,7 @@ public class PhotoController {
         
         return "photos";
     }
-    
+            
     @GetMapping("/profiles/{identifier}/photos/add")
     public String addphotos(@PathVariable String identifier, Model model) {
                 
@@ -60,8 +60,7 @@ public class PhotoController {
     @ResponseBody
     public byte[] get(@PathVariable String identifier, @PathVariable Long id) {                
         return photoService.getPhoto(id);
-    }
-    
+    }    
     
     @PostMapping("/profiles/{identifier}/photos/add")
     public String addPhoto(@RequestParam("file") MultipartFile file, @RequestParam String description, @PathVariable String identifier) {                
@@ -76,5 +75,42 @@ public class PhotoController {
         photoService.addPhoto(file, description, account);
         
         return "redirect:/profiles/" + username + "/photos";
+    }
+    
+    @GetMapping("/profiles/{identifier}/selectprofilepicture")
+    public String profilePictures(@PathVariable String identifier, Model model) {
+        
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();           
+        Account account = userRepository.findByUsername(username);                        
+        model.addAttribute("myprofile", account.getIdentifier());  
+        
+        model.addAttribute("profile", identifier);
+        
+        List<Photo> photos = account.getPhotoAlbum().getPhotos();
+        
+        model.addAttribute("photos", photos);
+        
+        return "selectprofilepicture";
+    }
+    
+    @PostMapping("/profiles/{identifier}/selectprofilepicture/{id}")
+    public String selectProfilePicture(@PathVariable String identifier, @PathVariable Long id) {
+        
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();           
+
+        System.out.println(identifier);
+        System.out.println(id);
+        
+        Account account = userRepository.findByUsername(username);                        
+        
+        Photo photo = photoService.getPhotoEntity(id);
+        
+        account.setProfilePicture(photo);
+        
+        userRepository.save(account);
+        
+        return "redirect:/profiles/" + username;
     }
 }

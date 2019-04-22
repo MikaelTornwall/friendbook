@@ -9,10 +9,15 @@
         
         <h1>Hello Profile!</h1>
         
+        
+        <div th:if="${profile.profilePicture != null}">            
+            <img th:src="@{/profiles/{identifier}/photos/{id} (identifier=${profile.identifier}, id=${profile.profilePicture.id})}" width="200" />
+        </div>
+        
         Profile: <span th:text="${profile.username}"></span>
         
-        <button><a th:href="@{/profiles/{identifier}/friends(identifier=${profile.identifier})}">Friends</a></button>
-                
+        <button><a th:href="@{/profiles/{identifier}/friends(identifier=${profile.identifier})}">Friends</a></button>        
+        
         <p>Write new post</p>
         <form th:action="@{/profiles/{identifier}/newpost (identifier=${profile.identifier})}" method="POST">            
             <textarea name="content" cols="50" rows="10"></textarea>

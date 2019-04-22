@@ -26,7 +26,7 @@ How to run?
 ## To Do
 
 - [x] User registration <br>
-- [ ] Profile picture <br>
+- [x] Profile picture <br>
 - [x] Search <br>
 - [x] Friend requests <br>
 - [x] Accepting friend requests <br>

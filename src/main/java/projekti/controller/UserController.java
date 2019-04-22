@@ -59,7 +59,7 @@ public class UserController {
         
         List<Post> list = posts.stream().limit(25).collect(Collectors.toList());
         
-        model.addAttribute("posts", list);
+        model.addAttribute("posts", list);                
         
         return "profile";
     }
