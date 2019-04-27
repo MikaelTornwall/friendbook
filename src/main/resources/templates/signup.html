@@ -5,17 +5,28 @@
         <title>FriendBook</title>
     </head>
     <body>
-         <h1>Sign up</h1>        
-        <form th:action="@{/signup}" method="POST">
-            Username: <input type="text" name="username" />
+        <nav th:replace="fragments/layout :: indexNav"></nav>        
+        
+        <div class="container p-4">
+            <div class="row">
+                <div class="col-4"></div>
+                <div class="col-4">
+        <h1>Sign up</h1>        
+        <form class="form-group" th:action="@{/signup}" method="POST">
+            <label for="inputUsername">Username</label>
+            <input class="form-control" type="text" name="username" />            
+            <label for="inputName">Name</label>
+            <input class="form-control" type="text" name="name" />            
+            <label for="inputPassword">Password</label>
+            <input class="form-control" type="password" name="password" />            
+            <label for="inputIdentifier">Identifier</label>
+            <input class="form-control" type="text" name="identifier" />       
             <br />
-            Name: <input type="text" name="name" />
-            <br />
-            Password: <input type="password" name="password" />
-            <br />
-            Identifier: <input type="text" name="identifier" />
-            <br />
-            <input type="submit" value="Register" />
+            <input class="btn btn-dark" type="submit" value="Register" />
         </form>
+        </div>
+                </div>
+        </div>
+        <footer th:replace="fragments/layout :: footer"></footer>
     </body>
 </html>

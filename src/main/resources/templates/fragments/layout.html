@@ -12,6 +12,7 @@ and open the template in the editor.
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
     </head>
     <body>
+        <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="header(myprofile)">            
             <a class="navbar-brand" th:href="@{/}">FriendBook</a>              
             <div class="navbar-nav">
@@ -24,5 +25,30 @@ and open the template in the editor.
                 <a class="nav-item nav-link ml-5" th:href="@{/logout}">Logout</a>            
             </div>                        
         </nav>
+        
+        <!-- Index navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="indexNav">
+            <div class="container">
+                <a class="navbar-brand" th:href="@{/}">FriendBook</a>              
+                <div class="navbar-nav">
+                    <a class="nav-link nav-item" th:href="@{/login}">Login</a>
+                    <a class="nav-link nav-item" th:href="@{/signup}">Signup</a>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- Footer -->
+        <footer class="container-fluid d-flex justify-content-center" th:fragment="footer">
+            <div class="text-center p-4">
+                <nav class="nav">
+                    <a class="nav-link nav-item" th:href="@{/}">Home</a>    
+                    <a class="nav-link nav-item" th:href="@{/login}">Login</a>
+                    <a class="nav-link nav-item" th:href="@{/signup}">Signup</a>
+                </nav>
+            <div>a Mikael Törnwall production</div>            
+            <div>FriendBook &copy; 2019</div>            
+            </div>
+        </footer>
+        
     </body>
 </html>

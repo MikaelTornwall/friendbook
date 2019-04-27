@@ -16,6 +16,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestParam;
 import projekti.repository.UserRepository;
+import javax.validation.Valid;
+import org.springframework.validation.BindingResult;
+
 
 @Controller
 public class SignupController {
@@ -41,7 +44,11 @@ public class SignupController {
     }
     
     @PostMapping("/signup")
-    public String signup(@RequestParam String username, @RequestParam String name, @RequestParam String password, @RequestParam String identifier) {                
+    public String create(@RequestParam String username, @RequestParam String name, @RequestParam String password, @RequestParam String identifier) {                
+                
+        if (username.isEmpty() || name.isEmpty() || password.isEmpty() || identifier.isEmpty()) {
+            return "signup";
+        }
         
         Account account = new Account();
         account.setUsername(username);
@@ -61,6 +68,6 @@ public class SignupController {
                 
         userDetailsService.save(account);        
         
-        return "redirect:/signup";
+        return "redirect:/";
     }
 }

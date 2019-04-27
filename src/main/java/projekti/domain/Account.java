@@ -12,15 +12,21 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.AbstractPersistable;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+import javax.validation.constraints.Email;
 
 
 @Entity
 @NoArgsConstructor @AllArgsConstructor @Data
 public class Account extends AbstractPersistable<Long> {   
-    
+        
     private String username;
+        
     private String name;
-    private String password; 
+        
+    private String password;
+        
     private String identifier;               
         
     @OneToOne(cascade = CascadeType.ALL)
