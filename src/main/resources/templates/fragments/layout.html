@@ -10,20 +10,24 @@ and open the template in the editor.
         <title>FriendBook</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" crossorigin="anonymous"/>
     </head>
     <body>
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="header(myprofile)">            
-            <a class="navbar-brand" th:href="@{/}">FriendBook</a>              
-            <div class="navbar-nav">
-                <a class="nav-item nav-link" th:href="@{/home}">Home</a>      
-                <a class="nav-item nav-link" th:href="@{/profiles}">Profiles</a>      
-                <a class="nav-item nav-link" th:href="@{/profiles/{identifier}(identifier=${myprofile})}">My profile</a> 
-                <a class="nav-item nav-link" th:href="@{/profiles/{identifier}/photos (identifier=${myprofile})}">Photos</a>
-                <a class="nav-item nav-link" th:href="@{/profiles/{identifier}/friendrequests (identifier=${myprofile})}">Friend requests</a>
-                <a class="nav-item nav-link" th:href="@{/profiles/{identifier}/settings (identifier=${myprofile})}">Settings</a>            
-                <a class="nav-item nav-link ml-5" th:href="@{/logout}">Logout</a>            
-            </div>                        
+            
+            <a class="navbar-brand pl-2" th:href="@{/}">FriendBook</a>              
+            <div class="navbar-nav w-100">
+                <div class="d-flex justify-content-left w-100 pl-5 pr-5">
+                    <a class="nav-item nav-link" th:href="@{/home}">Home</a>      
+                    <a class="nav-item nav-link" th:href="@{/profiles}">Profiles</a>      
+                    <a class="nav-item nav-link" th:href="@{/profiles/{identifier}(identifier=${myprofile})}">My profile</a> 
+                    <a class="nav-item nav-link" th:href="@{/profiles/{identifier}/photos (identifier=${myprofile})}">Photos</a>
+                    <a class="nav-item nav-link" th:href="@{/profiles/{identifier}/friendrequests (identifier=${myprofile})}">Friend requests</a>
+                    <a class="nav-item nav-link" th:href="@{/profiles/{identifier}/settings (identifier=${myprofile})}">Settings</a>            
+                </div>    
+                <a class="nav-item nav-link" th:href="@{/logout}">Logout</a>                                   
+            </div>
         </nav>
         
         <!-- Index navbar -->

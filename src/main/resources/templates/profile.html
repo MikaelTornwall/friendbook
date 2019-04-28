@@ -4,55 +4,92 @@
         <meta charset="UTF-8" />
         <title th:text="${profile.username}"></title>
     </head>
-    <body>
+    <body style="background:whitesmoke">
         <div th:replace="fragments/layout :: header(myprofile=${myprofile})"></div>
         
-        <div class="container">
-        <h1>Hello Profile!</h1>
+        <div class="container" style="background: white">                        
+            
+            <div class="container row p-4">                
+                <div class="col-4 mt-4">
+                    <div class="card w-50" style="border: none">                                                      
+                            <div th:if="${profile.profilePicture != null}">            
+                                <img class="card-img" style="border: 3px solid #343a40" th:src="@{/profiles/{identifier}/photos/{id} (identifier=${profile.identifier}, id=${profile.profilePicture.id})}" />
+                            </div>
+        
+                        <div class="mt-3">
+                            <div class="lead" th:text="'@' + ${profile.username}"></div>        
+                            <div class="text-muted" th:text="${profile.name}"></div>        
+                            <a class="text-dark mt-4" th:href="@{/profiles/{identifier}/friends(identifier=${profile.identifier})}">Show friends</a> <br/>
+                            <a class="text-dark mt-4" th:href="@{/profiles/{identifier}/photos(identifier=${profile.identifier})}">Show photos</a>
+                        </div>
+                    </div>
+                </div>      
                 
-        <div th:if="${profile.profilePicture != null}">            
-            <img th:src="@{/profiles/{identifier}/photos/{id} (identifier=${profile.identifier}, id=${profile.profilePicture.id})}" width="200" />
-        </div>
+                <div class="col-6 mt-3">
+                    <form class="form-group" th:action="@{/profiles/{identifier}/newpost (identifier=${profile.identifier})}" method="POST">            
+                        <textarea class="form-control" name="content" cols="50" rows="7" placeholder="What's on your mind?"></textarea>            
+                        <input class="btn btn-dark mt-3" type="submit" value="New post" />
+                    </form>        
+                </div>
+            </div>
+            
+            <!-- Form ends here -->        
         
-        Profile: <span th:text="${profile.username}"></span>
-        
-        <button><a th:href="@{/profiles/{identifier}/friends(identifier=${profile.identifier})}">Friends</a></button>        
-                
-        <form th:action="@{/profiles/{identifier}/newpost (identifier=${profile.identifier})}" method="POST">            
-            <textarea name="content" cols="50" rows="7" placeholder="What's on your mind?"></textarea>
-            <br />
-            <input type="submit" value="New post" />
-        </form>
-        
-        <hr />
-        <h3>Posts: </h3>
+        <div class="container row">        
+            <div class="col-3"></div>
+            <div class="col-6">
         <div th:each="post : ${posts}">
             
-            <i th:text="${#temporals.format(post.date, 'dd-MM-yyyy HH:mm')}"></i>
+            <div class="card mb-4" style="border:none">
+                
+                <div class="card-body">
+                <small><i class="text-muted ml-2 mt-2" th:text="${#temporals.format(post.date, 'dd-MM-yyyy HH:mm')}"></i></small>                
+                <a class="text-dark" th:href="@{/profiles/{identifier} (identifier=${post.owner.identifier})}" th:text="${post.owner.username} + ' wrote:'"></a>  
+                
+                <div class="lead p-3" th:text="${post.content}"></div>
+                   
+                <div class="">                    
+                    
+                    <div class="ml-3">
+                    <form class="form-group" th:action="@{/profiles/{identifier}/post/{id}/like (identifier=${profile.identifier}, id=${post.id})}" method="POST">
+                        <button class="btn btn-danger far fa-heart" type="submit"> <span class="text-decoration-none" th:text="${' ' + post.likes}"></span></button>
+                    </form>                        
+                    </div>
+                    
+                    <div class="">
+                    <form class="form-inline" th:action="@{/profiles/{identifier}/post/{id}/comment (identifier=${profile.identifier}, id=${post.id})}" method="POST">
+                        <div class="col-10">
+                        <input class="form-control w-100" type="textfield" name="comment" />
+                        </div>
+                        <div class="col-2">
+                        <input class="form-control btn btn-dark btn-sm" type="submit" value="Comment" />
+                        </div>
+                    </form>                
+                    </div>                                        
+                    
+                    </div>
+                </div>
             
-            <div th:text="${post.content}"></div>
-            
-            By: <span th:text="${post.owner.username}"></span>  
-            
-            <form th:action="@{/profiles/{identifier}/post/{id}/like (identifier=${profile.identifier}, id=${post.id})}" method="POST">
-                Like: <input type="submit" th:value="${post.likes}" />
-            </form>
-            
-            <form th:action="@{/profiles/{identifier}/post/{id}/comment (identifier=${profile.identifier}, id=${post.id})}" method="POST">
-                Write a comment: <textarea rows="1" cols="30" name="comment"></textarea>
-                <input type="submit" value="Comment" />
-            </form>
-            
-            <div>Comments: </div>
-            <div th:each="comment : ${post.comments}">
-                <span th:text="${#temporals.format(comment.datetime, 'dd-MM-yyyy HH:mm')}"></span>
-                &nbsp;
-                <span th:text="${comment.commenter.username}"></span>
+               <div class="card-body">
+                <div class="card w-75" th:if="${!post.comments.isEmpty()}">
+                    <div class="card-body">            
+                        <div class="mb-2" th:each="comment : ${post.comments}">
+                            <small class="text-muted"><span th:text="${#temporals.format(comment.datetime, 'dd-MM-yyyy HH:mm')}"></span></small>                           
+                            <a th:href="@{/profiles/{identifier} (identifier=${comment.commenter.identifier})}" th:text="${comment.commenter.username + ' commented: '}"></a>
                 <div th:text="${comment.content}"></div>
+            </div>            
             </div>
-            <br />
-            <br />  
+                </div>
+            </div>
+            <!-- Comments end here-->
+            
+            </div>
+            <!-- Single posts end here -->
         </div>
+        </div>
+        </div>   
+        
+        <!-- Post container ends here -->
         </div>
     </body>
 </html>

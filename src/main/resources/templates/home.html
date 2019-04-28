@@ -4,9 +4,10 @@
         <meta charset="UTF-8" />
         <title>FriendBook</title>
     </head>
-    <body>
-
+    <body>        
         <div th:replace="fragments/layout :: header(myprofile=${myprofile})"></div>
-        <h1 th:text="${'Welcome to ' + brand}">Hello world</h1>           
+        <div class="container">
+            <h1 th:text="${'Welcome ' + brand + '!'}">Hello world</h1>           
+        </div>
     </body>
 </html>

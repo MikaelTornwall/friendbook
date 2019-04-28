@@ -92,7 +92,7 @@ public class FriendService {
         List<Friend> friendAccounts = new ArrayList<>();
         
         for (Friend friend : friends) {
-            if (!friend.isActive()) {                
+            if (!friend.isActive() && friend.getOwner().equals(account)) {                
                 friendAccounts.add(friend);                
             }
         }

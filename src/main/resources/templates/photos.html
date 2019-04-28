@@ -7,44 +7,60 @@
     <body>
         <div th:replace="fragments/layout :: header(myprofile=${myprofile})"></div>
         
-        <div>Photos</div>
-        <div>
-            <a th:href="@{/profiles/{identifier}/photos/add (identifier=${myprofile})}">Add photo</a>
+        <div class="container p-4">
+        
+        <div class="text-right">
+            <a class="h1 fas fa-plus text-decoration-none text-dark" th:href="@{/profiles/{identifier}/photos/add (identifier=${myprofile})}"></a>
         </div>
         
-        <h3>Album</h3>
-        <div th:each="photo : ${photos}">
-            <a th:href="@{/profiles/{identifier}/photos/{id} (identifier=${profile}, id=${photo.id})}">
-            <img th:src="@{/profiles/{identifier}/photos/{id} (identifier=${profile}, id=${photo.id})}" th:alt="${photo.description}" width="350" />
-            </a>
+            <div class="container row pt-3">
+                <div class="col-3"></div>
+                
+                <div class="col-6">        
+                    <div th:each="photo : ${photos}">
+                        <a th:href="@{/profiles/{identifier}/photos/{id} (identifier=${profile}, id=${photo.id})}">
+                            <img class="img-fluid" th:src="@{/profiles/{identifier}/photos/{id} (identifier=${profile}, id=${photo.id})}" th:alt="${photo.description}" />
+                        </a>                        
             
-            <br />
+                        <br />
+                        <i class="text-muted" th:text="${photo.description}"></i>                                                
+                        
+                        <div class="text-right" th:if="${myprofile} == ${photo.photoAlbum.owner.identifier}">
+                            <form class="form-group" th:action="@{/profiles/{identifier}/photos/{id}/delete (identifier=${profile}, id=${photo.id})}" method="POST">
+                                <button class="btn btn-dark far fa-trash-alt" type="submit"></button>
+                            </form>                                                
+                        </div>
             
-            <i th:text="${photo.description}"></i>            
+                        <div class="container row mt-2">
+                            
+                            <div class="col-3">
+                                <form class="form-group" th:action="@{/profiles/{identifier}/photos/{id}/like (identifier=${profile}, id=${photo.id})}" method="POST">
+                                    <button class="btn btn-danger far fa-heart" type="submit"><strong th:text="' ' + ${photo.likes}"></strong></button>          
+                                </form>
+                            </div>
+                                
+                            <div class="col-9">
+                            <form class="form-group" th:action="@{/profiles/{identifier}/photos/{id}/comment (identifier=${profile}, id=${photo.id})}" method="POST">
+                                <input class="form-control" type="textfield" name="comment" placeholder="Write a comment"></input>
+                                <button class="btn btn-dark mt-1" type="submit">Comment</button>
+                            </form>   
+                            </div>    
+                                
+                        </div>
             
-            <form th:action="@{/profiles/{identifier}/photos/{id}/like (identifier=${profile}, id=${photo.id})}" method="POST">
-                <input type="submit" th:value="${photo.likes}" />           
-            </form>
-            <div th:if="${myprofile} == ${photo.photoAlbum.owner.identifier}">
-                <form th:action="@{/profiles/{identifier}/photos/{id}/delete (identifier=${profile}, id=${photo.id})}" method="POST">
-                    <input type="submit" value="Delete" />
-                </form>                            
-            </div>
-            
-            <form th:action="@{/profiles/{identifier}/photos/{id}/comment (identifier=${profile}, id=${photo.id})}" method="POST">
-                Write comment: <textarea rows="1" cols="30" name="comment"></textarea>
-                <input type="submit" value="Comment" />
-            </form>
-            
-            Comments: 
             <div th:each="comment : ${photo.comments}">
-                <span th:text="${#temporals.format(comment.datetime, 'dd-MM-yyyy HH:mm')}"></span>
+                
+                <small class="text-muted" th:text="${#temporals.format(comment.datetime, 'dd-MM-yyyy HH:mm')}"></small>
                 &nbsp;
-                <span th:text='${comment.commenter.username}'></span>
-                <div th:text="${comment.content}"></div>
+                <a class="text-dark" th:href="@{/profiles/{identifier} (identifier=${comment.commenter.identifier})}" th:text="${comment.commenter.username + ' commented:'}"></a>
+                <div class="mb-2" th:text="${comment.content}"></div>
             </div>
             
             <br />
+        </div>
+        </div>
+        </div>
+        <!-- Album ends here --> 
         </div>
     </body>
 </html>

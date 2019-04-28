@@ -7,6 +7,7 @@
     <body>
         <div th:replace="fragments/layout :: header(myprofile=${myprofile})"></div>
         
+        <div class="container">
         <h2>Friend requests</h2>
         
         <div th:text="${norequests}"></div>
@@ -23,5 +24,6 @@
             </form>
             <br />
         </div>      
+        </div>
     </body>
 </html>

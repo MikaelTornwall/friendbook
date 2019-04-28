@@ -33,14 +33,12 @@ public class DefaultController {
     }
     
     @GetMapping("/home")
-    public String home(Model model) { 
-        model.addAttribute("brand", "FriendBook!");
-        
+    public String home(Model model) {                 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();        
         Account account = userRepository.findByUsername(username);                        
         model.addAttribute("myprofile", account.getIdentifier());
-        
+        model.addAttribute("brand", username);
         return "home";
     }
         
