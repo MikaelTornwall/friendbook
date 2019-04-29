@@ -14,9 +14,12 @@
         </div>
         
             <div class="container row pt-3">
-                <div class="col-3"></div>
+                <div class="col-2"></div>
+                <div class="col-1 d-flex justify-content-center pt-5 mt-5 h1" th:if="${!photos.isEmpty()}" > < </div>
+                <div class="col-1 pt-5 mt-5 h1" th:if="${photos.isEmpty()}" ></div>
                 
                 <div class="col-6">        
+                    <div class="lead d-flex justify-content-center align-items-center" th:if="${photos.isEmpty()}" th:text="${profile + ' does not seem to have any photos yet'}"></div>                    
                     <div th:each="photo : ${photos}">
                         <a th:href="@{/profiles/{identifier}/photos/{id} (identifier=${profile}, id=${photo.id})}">
                             <img class="img-fluid" th:src="@{/profiles/{identifier}/photos/{id} (identifier=${profile}, id=${photo.id})}" th:alt="${photo.description}" />
@@ -35,7 +38,7 @@
                             
                             <div class="col-3">
                                 <form class="form-group" th:action="@{/profiles/{identifier}/photos/{id}/like (identifier=${profile}, id=${photo.id})}" method="POST">
-                                    <button class="btn btn-danger far fa-heart" type="submit"><strong th:text="' ' + ${photo.likes}"></strong></button>          
+                                    <button class="btn btn-danger far fa-heart" type="submit"><strong style="font-family:'Helvetica Neue'" th:text="' ' + ${photo.likes}"></strong></button>          
                                 </form>
                             </div>
                                 
@@ -59,6 +62,8 @@
             <br />
         </div>
         </div>
+                <div class="col-1 d-flex justify-content-center pt-5 mt-5 h1" th:if="${!photos.isEmpty()}"> > </div>
+                <div class="col-2"></div>
         </div>
         <!-- Album ends here --> 
         </div>

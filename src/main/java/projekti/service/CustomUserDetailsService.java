@@ -5,11 +5,13 @@ import projekti.domain.Account;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import projekti.repository.UserRepository;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import projekti.config.DevelopmentSecurityConfiguration;
@@ -54,5 +56,42 @@ public class CustomUserDetailsService implements UserDetailsService {
         }
         
         userRepository.save(account);
+    }
+    
+    public void update(Account account) {
+        userRepository.save(account);
+    }
+    
+    public Account findByUsername(String username) {
+        return userRepository.findByUsername(username);            
+    }
+    
+    public Account findByIdentifier(String identifier) {
+        return userRepository.findByIdentifier(identifier);            
+    }        
+    
+    public Account getCurrentUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();           
+        Account account = userRepository.findByUsername(username);   
+        
+        return account;
+    }
+    
+    public String getCurrentUsername() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();    
+        
+        return username;
+    }
+    
+    public String getCurrentIdentifier() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();           
+        Account account = userRepository.findByUsername(username); 
+        
+        String identifier = account.getIdentifier();
+        
+        return identifier;
     }
 }

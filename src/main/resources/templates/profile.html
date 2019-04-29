@@ -4,10 +4,10 @@
         <meta charset="UTF-8" />
         <title th:text="${profile.username}"></title>
     </head>
-    <body style="background:whitesmoke">
+    <body>
         <div th:replace="fragments/layout :: header(myprofile=${myprofile})"></div>
         
-        <div class="container" style="background: white">                        
+        <div class="container">                        
             
             <div class="container row p-4">                
                 <div class="col-4 mt-4">
@@ -52,7 +52,7 @@
                     
                     <div class="ml-3">
                     <form class="form-group" th:action="@{/profiles/{identifier}/post/{id}/like (identifier=${profile.identifier}, id=${post.id})}" method="POST">
-                        <button class="btn btn-danger far fa-heart" type="submit"> <span class="text-decoration-none" th:text="${' ' + post.likes}"></span></button>
+                        <button class="btn btn-danger far fa-heart" type="submit"><strong class="text-decoration-none" style="font-family:'Helvetica Neue'" th:text="${' ' + post.likes}"></strong></button>
                     </form>                        
                     </div>
                     

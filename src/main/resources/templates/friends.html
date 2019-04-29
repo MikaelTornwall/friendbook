@@ -7,11 +7,32 @@
     <body>
 
         <div th:replace="fragments/layout :: header(myprofile=${myprofile})"></div>
-        <div>Friends: </div>
         
-        <div th:each="friend : ${friends}">
-            <p th:text="${friend.person.username}"></p>
-            <p th:text="${friend.person.name}"></p>
-        </div>
+        <div class="container row p-4">            
+            <div class="col-3"></div>
+            <div class="col-6">
+                <div class="h1 mb-2"><i class="fas fa-user-friends"></i> <span th:text="${'Friends of ' + profile}"></span></div>
+        
+                <div class="lead mt-3" th:if="${friends.isEmpty()}" th:text="${profile + ' does not seem to have any friends yet'}"></div>
+                    <div th:each="friend : ${friends}">                        
+                        <div class="card mb-3">
+                            <div class="row no-gutters">
+                                <div class="col-6">                                    
+                                    <img th:if="${friend.person.profilePicture != null}" class="card-img" th:src="@{/profiles/{identifier}/photos/{id} (identifier=${friend.person.identifier}, id=${friend.person.profilePicture.id})}" />
+                                    <img th:if="${friend.person.profilePicture == null}" class="card-img" src="https://images.pexels.com/photos/634021/pexels-photo-634021.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" />
+                                </div>
+                
+                                <div class="card-body col-6 p-3">                       
+                                    <a class="text-dark" th:href="@{/profiles/{identifier}/ (identifier=${friend.person.identifier})}">
+                                        <div th:text="${'@ ' + friend.person.username}"></div>
+                                        <div th:text="${friend.person.name}"></div>
+                                    </a>      
+                        
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        </div>
+                        </div>                        
     </body>
 </html>

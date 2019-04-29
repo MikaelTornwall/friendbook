@@ -24,31 +24,31 @@ import projekti.repository.FriendRepository;
 public class FriendController {
     
     @Autowired
-    private UserRepository userRepository;        
+    private CustomUserDetailsService userService;        
     
     @Autowired
     private FriendService friendService;    
     
     @GetMapping("/profiles/{identifier}/friends")
     public String friends(@PathVariable String identifier, Model model) {
+                
+        Account account = userService.getCurrentUser();                        
         
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();        
-        Account account = userRepository.findByUsername(username);                        
         model.addAttribute("myprofile", account.getIdentifier());  
         
         List<Friend> friends = friendService.getFriends(identifier);
-       
+                       
         model.addAttribute("friends", friends);
+       
+        model.addAttribute("profile", userService.findByIdentifier(identifier).getUsername());
         
         return "friends";
     }
     
     @PostMapping("/profiles/{identifier}/friendrequests/accept")
     public String acceptFriendRequest(@PathVariable String identifier) {
-        
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName(); 
+                
+        String username = userService.getCurrentUsername();
         
         friendService.acceptFriendRequest(username, identifier);
                         
@@ -57,9 +57,8 @@ public class FriendController {
     
     @PostMapping("/profiles/{identifier}/friendrequests/decline")
     public String declineFriendRequest(@PathVariable String identifier) {
-        
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName(); 
+                
+        String username = userService.getCurrentUsername();
         
         friendService.declineFriendRequest(username, identifier);
                         
@@ -69,9 +68,7 @@ public class FriendController {
     @GetMapping("/profiles/{identifier}/friendrequests")
     public String friendRequests(@PathVariable String identifier, Model model) {
         
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();        
-        Account account = userRepository.findByUsername(username);                        
+        Account account = userService.getCurrentUser();
         model.addAttribute("myprofile", account.getIdentifier());  
         
         List<Friend> friendRequests = friendService.getFriendRequests(identifier);
@@ -85,13 +82,10 @@ public class FriendController {
     }
     
     @PostMapping("/profiles/add/{identifier}")
-    public String sendRequest(@PathVariable String identifier) {
+    public String sendRequest(@PathVariable String identifier) {                              
         
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();                
-        
-        Account firstAccount = userRepository.findByUsername(username);                                        
-        Account secondAccount = userRepository.findByIdentifier(identifier);   
+        Account firstAccount = userService.getCurrentUser();                                        
+        Account secondAccount = userService.findByIdentifier(identifier);   
         
         friendService.sendFriendRequest(firstAccount, secondAccount);                
         

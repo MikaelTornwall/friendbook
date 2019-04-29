@@ -32,7 +32,10 @@ public class FriendService {
                 
         Friend secondFriend = new Friend(secondAccount, firstAccount, date, false);
                 
-        secondAccount.getFriendSet().add(secondFriend);
+        if (!secondAccount.getFriendSet().contains(secondFriend)) {
+            secondAccount.getFriendSet().add(secondFriend);
+        }
+        
                 
         friendRepository.save(secondFriend);
                 
@@ -61,7 +64,7 @@ public class FriendService {
                 friend.setActive(true);
                 friendRepository.save(friend);
             }
-        }               
+        }                           
     }
     
     public void declineFriendRequest(String username, String identifier) {

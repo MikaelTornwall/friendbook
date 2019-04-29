@@ -23,22 +23,19 @@ import org.springframework.web.multipart.MultipartFile;
 public class PhotoController {
     
     @Autowired
-    private UserRepository userRepository;
+    private CustomUserDetailsService userService;
     
     @Autowired
     private PhotoService photoService;
     
     @GetMapping("/profiles/{identifier}/photos")
     public String photos(@PathVariable String identifier, Model model) {
-        
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();           
-        Account account = userRepository.findByUsername(username);                        
-        model.addAttribute("myprofile", account.getIdentifier());  
+                                
+        model.addAttribute("myprofile", userService.getCurrentIdentifier());  
                         
         model.addAttribute("profile", identifier);
         
-        Account profile = userRepository.findByIdentifier(identifier);
+        Account profile = userService.findByIdentifier(identifier);
         
         List<Photo> photos = profile.getPhotoAlbum().getPhotos();
         
@@ -46,14 +43,59 @@ public class PhotoController {
         
         return "photos";
     }
+    
+    @GetMapping("/profiles/{identifier}/photoalbum/{id}")
+    public String photo(@PathVariable String identifier, @PathVariable Long id, Model model) {
+                                              
+        model.addAttribute("myprofile", userService.getCurrentIdentifier());  
+                        
+        model.addAttribute("profile", identifier);
+        
+        Account profile = userService.findByIdentifier(identifier);
+        
+        /*List<Photo> photos = profile.getPhotoAlbum().getPhotos();  
+        
+        long next = id; 
+        long prev = id;
+        
+        if (photos.size() > 1) {
+            for (int i = 0; i < photos.size(); i++) {            
+                if (photos.get(i).getId() == id) {
+                    if (i == photos.size() - 1) {
+                        next = photos.get(0).getId();
+                        prev = photos.get(i - 1).getId();
+                    } else if (i == 0) {
+                        next = photos.get(i + 1).getId();
+                        prev = photos.get(photos.size() - 1).getId();
+                    } else {
+                        next = photos.get(i + 1).getId();
+                        prev = photos.get(i - 1).getId();                    
+                    }
+                }
+            }         
+        }
+        
+        if (id == 0) {            
+            Photo photo = photos.get(0);
+            model.addAttribute("photo", photo);            
+        } else {
+            Photo photo = photoService.getPhotoEntity(id);
+            model.addAttribute("photo", photo);
+        }       
+        
+        model.addAttribute("next", next);
+        model.addAttribute("prev", prev);
+        
+        System.out.println(next);
+        System.out.println(prev);*/
+        
+        return "photo";
+    }
             
     @GetMapping("/profiles/{identifier}/photos/add")
-    public String addphotos(@PathVariable String identifier, Model model) {
-                
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();           
-        Account account = userRepository.findByUsername(username);                        
-        model.addAttribute("myprofile", account.getIdentifier());  
+    public String addphotos(@PathVariable String identifier, Model model) {                
+                               
+        model.addAttribute("myprofile", userService.getCurrentIdentifier());  
         
         return "addphoto";
     }
@@ -63,20 +105,16 @@ public class PhotoController {
     @ResponseBody
     public byte[] get(@PathVariable String identifier, @PathVariable Long id) {                
         return photoService.getPhoto(id);
-    }    
+    }
     
     @PostMapping("/profiles/{identifier}/photos/add")
-    public String addPhoto(@RequestParam("file") MultipartFile file, @RequestParam String description, @PathVariable String identifier) {                
+    public String addPhoto(@RequestParam("file") MultipartFile file, @RequestParam String description, @PathVariable String identifier) {                                
         
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();                   
-        
-        Account account = userRepository.findByUsername(username);     
-        // if (identifier != username) return "photos";
+        Account account = userService.getCurrentUser();             
                
         photoService.addPhoto(file, description, account);
         
-        return "redirect:/profiles/" + username + "/photos";
+        return "redirect:/profiles/" + account.getUsername() + "/photos";
     }
     
     @PostMapping("/profiles/{identifier}/photos/{id}/like")
@@ -92,11 +130,8 @@ public class PhotoController {
     
     @PostMapping("/profiles/{identifier}/photos/{id}/comment")
     public String comment(@PathVariable String identifier, @PathVariable Long id, @RequestParam String comment) {
-        
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();   
-        
-        System.out.println("Comment: " + comment);
+                
+        String username = userService.getCurrentUsername();                
         
         photoService.comment(username, id, comment);
         
@@ -105,10 +140,8 @@ public class PhotoController {
      
     @PostMapping("/profiles/{identifier}/photos/{id}/delete")
     public String deletePhoto(@PathVariable String identifier, @PathVariable Long id) {                
-                        
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();                           
-        Account account = userRepository.findByUsername(username);
+                                             
+        Account account = userService.getCurrentUser();
         
         if (!identifier.equals(account.getIdentifier())) return "redirect:/profiles/" + identifier + "/photos";
         
@@ -119,10 +152,9 @@ public class PhotoController {
     
     @GetMapping("/profiles/{identifier}/selectprofilepicture")
     public String profilePictures(@PathVariable String identifier, Model model) {
+                      
+        Account account = userService.getCurrentUser();                        
         
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();           
-        Account account = userRepository.findByUsername(username);                        
         model.addAttribute("myprofile", account.getIdentifier());  
         
         model.addAttribute("profile", identifier);
@@ -135,22 +167,16 @@ public class PhotoController {
     }
     
     @PostMapping("/profiles/{identifier}/selectprofilepicture/{id}")
-    public String selectProfilePicture(@PathVariable String identifier, @PathVariable Long id) {
+    public String selectProfilePicture(@PathVariable String identifier, @PathVariable Long id) {                
         
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();           
-
-        System.out.println(identifier);
-        System.out.println(id);
-        
-        Account account = userRepository.findByUsername(username);                        
+        Account account = userService.getCurrentUser();                        
         
         Photo photo = photoService.getPhotoEntity(id);
         
         account.setProfilePicture(photo);
         
-        userRepository.save(account);
+        userService.update(account);
         
-        return "redirect:/profiles/" + username;
+        return "redirect:/profiles/" + account.getUsername();
     }
 }

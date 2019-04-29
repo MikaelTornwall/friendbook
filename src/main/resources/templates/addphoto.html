@@ -7,16 +7,21 @@
     <body>
         <div th:replace="fragments/layout :: header(myprofile=${myprofile})"></div>
         
-        <div>Add photo</div>
+        <div class="container row p-4">
+            <div class="col-3"></div>
+            <div class="col-6">
+        <div class="h3"><i class="far fa-images"></i> Add photo</div>
         <br />
-        <form th:action="@{/profiles/{identifier}/photos/add (identifier=${myprofile})}" enctype="multipart/form-data" method="POST">
-            <input type="file" name="file" />
+        <form class="form-group" th:action="@{/profiles/{identifier}/photos/add (identifier=${myprofile})}" enctype="multipart/form-data" method="POST">
+            <input class="form-control-file" type="file" name="file" />
             <br />
             <br />
             <div>Description</div>
-            <textarea name="description" cols="30" rows="3"></textarea>
+            <textarea class="form-control" name="description" cols="30" rows="3"></textarea>
             <br />
-            <input type="submit" value="Add" />
+            <button class="btn btn-dark" type="submit" ><i class="fas fa-plus"></i></button>
         </form>
+        </div>
+        </div>
     </body>
 </html>
