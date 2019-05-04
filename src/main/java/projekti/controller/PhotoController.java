@@ -121,9 +121,8 @@ public class PhotoController {
     
     @PostMapping("/profiles/{identifier}/photos/{id}/like")
     public String like(@PathVariable String identifier, @PathVariable Long id) {
-        
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();   
+                
+        String username = userService.getCurrentUsername();
         
         photoService.like(username, id);
         
@@ -179,6 +178,6 @@ public class PhotoController {
         
         userService.update(account);
         
-        return "redirect:/profiles/" + account.getUsername();
+        return "redirect:/profiles/" + account.getIdentifier();
     }
 }

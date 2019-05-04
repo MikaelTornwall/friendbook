@@ -49,20 +49,22 @@ public class FriendController {
     public String acceptFriendRequest(@PathVariable String identifier) {
                 
         String username = userService.getCurrentUsername();
+        String currentIdentifier = userService.getCurrentIdentifier();
         
         friendService.acceptFriendRequest(username, identifier);
                         
-        return "redirect:/profiles/" + username + "/friendrequests";
+        return "redirect:/profiles/" + currentIdentifier + "/friendrequests";
     }
     
     @PostMapping("/profiles/{identifier}/friendrequests/decline")
     public String declineFriendRequest(@PathVariable String identifier) {
                 
         String username = userService.getCurrentUsername();
+        String currentIdentifier = userService.getCurrentIdentifier();
         
         friendService.declineFriendRequest(username, identifier);
                         
-        return "redirect:/profiles/" + username + "/friendrequests";
+        return "redirect:/profiles/" + currentIdentifier + "/friendrequests";
     }
     
     @GetMapping("/profiles/{identifier}/friendrequests")
