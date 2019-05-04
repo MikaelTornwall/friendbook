@@ -1,5 +1,6 @@
 package projekti.controller;
 
+import projekti.service.CustomUserDetailsService;
 import java.util.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +15,7 @@ import projekti.domain.Account;
 public class DefaultController {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserRepository userRepository;    
             
     @GetMapping("*")
     public String helloWorld(Model model) { 
@@ -24,7 +25,7 @@ public class DefaultController {
         List<Account> list = userRepository.findListByUsername(username);
         
         if (!list.isEmpty()) {
-            return "redirect:/home";
+            return "redirect:/profiles";
         }
         
         model.addAttribute("brand", "FriendBook!");                
@@ -32,14 +33,16 @@ public class DefaultController {
         return "index";
     }
     
+    /*
     @GetMapping("/home")
     public String home(Model model) {                 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();        
         Account account = userRepository.findByUsername(username);                        
         model.addAttribute("myprofile", account.getIdentifier());
+        
         model.addAttribute("brand", username);
         return "home";
     }
-        
+    */
 }

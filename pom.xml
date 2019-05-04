@@ -69,6 +69,12 @@
             <artifactId>h2</artifactId>
         </dependency>
         
+        <!-- PostgreSQL-->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
+        
         <dependency>
             <groupId>org.fluentlenium</groupId>
             <artifactId>fluentlenium-junit</artifactId>
@@ -92,8 +98,7 @@
             <artifactId>edu-test-utils</artifactId>
             <version>0.4.2</version>
             <scope>test</scope>
-        </dependency>
-        
+        </dependency>                
             
     </dependencies>
 

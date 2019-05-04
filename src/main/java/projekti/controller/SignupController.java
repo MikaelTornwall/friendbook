@@ -31,13 +31,12 @@ public class SignupController {
     
     @GetMapping("/signup")
     public String signupPage(Model model) { 
-        
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();        
+                
+        String username = userDetailsService.getCurrentUsername();
         List<Account> list = userRepository.findListByUsername(username);
         
         if (!list.isEmpty()) {
-            return "redirect:/home";
+            return "redirect:/profiles";
         }
         
         return "signup";

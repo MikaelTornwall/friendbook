@@ -1,5 +1,6 @@
 package projekti.config;
 
+import projekti.service.CustomUserDetailsService;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -31,7 +32,7 @@ public class DevelopmentSecurityConfiguration extends WebSecurityConfigurerAdapt
             .antMatchers("/signup").permitAll()            
             .antMatchers("*").hasAnyAuthority("USER")              
             .anyRequest().authenticated().and()
-            .formLogin().defaultSuccessUrl("/home")
+            .formLogin().defaultSuccessUrl("/profiles")
             .permitAll().and()
             .logout().permitAll();
     }

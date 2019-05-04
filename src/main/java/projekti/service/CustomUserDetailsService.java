@@ -89,9 +89,9 @@ public class CustomUserDetailsService implements UserDetailsService {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();           
         Account account = userRepository.findByUsername(username); 
-        
+                
         String identifier = account.getIdentifier();
-        
+        System.out.println("Identifier: " + identifier);
         return identifier;
     }
 }

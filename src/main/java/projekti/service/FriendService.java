@@ -112,7 +112,7 @@ public class FriendService {
         List<Friend> friendAccounts = new ArrayList<>();
         
         for (Friend friend : friends) {
-            if (friend.isActive()) friendAccounts.add(friend);
+            if (friend.isActive() && !friendAccounts.contains(friend)) friendAccounts.add(friend);
         }
         
         return friendAccounts;

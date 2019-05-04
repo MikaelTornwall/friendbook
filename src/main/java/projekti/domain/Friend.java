@@ -19,12 +19,27 @@ public class Friend extends AbstractPersistable<Long> {
     
     @ManyToOne(cascade = CascadeType.ALL)
     private Account owner;
-    
-    
+        
     @ManyToOne(cascade = CascadeType.ALL)
     private Account person;
     
     private LocalDateTime date;
     
     private boolean isActive;
+    
+    @Override
+    public boolean equals(Object another) {
+        
+        final Friend other = (Friend) another;
+                        
+        if (owner.getUsername().equals(person.getUsername())) {
+            return true;
+        }
+                
+        if (person.getUsername().equals(other.getPerson().getUsername())) {
+            return true;
+        }
+        
+        return false;
+    }                 
 }

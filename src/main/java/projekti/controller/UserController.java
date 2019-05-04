@@ -30,16 +30,17 @@ public class UserController {
     private UserRepository userRepository;
     
     @Autowired
+    private CustomUserDetailsService userDetailsService;
+    
+    @Autowired
     private ProfileService profileService;
     
     @GetMapping("/profiles")
     public String getProfiles(Model model) {                
         
         model.addAttribute("profiles", profileService.profiles());                
-        
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();        
-        Account account = userRepository.findByUsername(username);                        
+                        
+        Account account = userDetailsService.getCurrentUser();
         model.addAttribute("myprofile", account.getIdentifier());        
         
         return "profiles";
@@ -51,10 +52,9 @@ public class UserController {
         Account profile = userRepository.findByIdentifier(identifier);
         
         model.addAttribute("profile", profile);        
+                
+        Account account = userDetailsService.getCurrentUser();                      
         
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();        
-        Account account = userRepository.findByUsername(username);                        
         model.addAttribute("myprofile", account.getIdentifier());
 
         List<Post> posts = profile.getWall().getPosts();
@@ -71,11 +71,9 @@ public class UserController {
     @PostMapping("/profiles")
     public String search(@RequestParam String username, Model model) {
         
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String name = auth.getName();        
-        Account account = userRepository.findByUsername(name);                        
-        model.addAttribute("myprofile", account.getIdentifier());
+        Account account = userDetailsService.getCurrentUser();                      
         
+        model.addAttribute("myprofile", account.getIdentifier());        
         model.addAttribute("profiles", profileService.profiles(username));
         
         return "profiles";
@@ -83,10 +81,8 @@ public class UserController {
     
     @GetMapping("/profiles/{identifier}/settings")
     public String settings(@PathVariable String identifier, Model model) {
-        
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();        
-        Account account = userRepository.findByUsername(username);  
+                
+        Account account = userDetailsService.getCurrentUser();
         
         if (!identifier.equals(account.getIdentifier())) return "redirect:/profiles/" + identifier;
         

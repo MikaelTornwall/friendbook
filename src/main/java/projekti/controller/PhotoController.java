@@ -44,6 +44,7 @@ public class PhotoController {
         return "photos";
     }
     
+    /*
     @GetMapping("/profiles/{identifier}/photoalbum/{id}")
     public String photo(@PathVariable String identifier, @PathVariable Long id, Model model) {
                                               
@@ -53,7 +54,7 @@ public class PhotoController {
         
         Account profile = userService.findByIdentifier(identifier);
         
-        /*List<Photo> photos = profile.getPhotoAlbum().getPhotos();  
+        List<Photo> photos = profile.getPhotoAlbum().getPhotos();  
         
         long next = id; 
         long prev = id;
@@ -87,11 +88,12 @@ public class PhotoController {
         model.addAttribute("prev", prev);
         
         System.out.println(next);
-        System.out.println(prev);*/
+        System.out.println(prev);
         
         return "photo";
     }
-            
+    */  
+    
     @GetMapping("/profiles/{identifier}/photos/add")
     public String addphotos(@PathVariable String identifier, Model model) {                
                                

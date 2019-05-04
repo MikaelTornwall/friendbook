@@ -20,13 +20,15 @@ import projekti.repository.UserRepository;
 public class PostController {
     
     @Autowired
-    private PostService postService;    
+    private PostService postService; 
+    
+    @Autowired
+    private CustomUserDetailsService userDetailsService;
     
     @PostMapping("/profiles/{identifier}/newpost")
     public String post(@RequestParam String content, @PathVariable String identifier) {                        
-        
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();                
+                
+        String username = userDetailsService.getCurrentUsername();        
         
         postService.addPost(identifier, username, content);                
         
@@ -35,9 +37,8 @@ public class PostController {
  
     @PostMapping("/profiles/{identifier}/post/{id}/like")
     public String like(@PathVariable String identifier, @PathVariable Long id) {
-        
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();                
+                
+        String username = userDetailsService.getCurrentUsername();        
                 
         postService.like(username, id);
         
@@ -46,14 +47,12 @@ public class PostController {
     
     @PostMapping("/profiles/{identifier}/post/{id}/comment")
     public String comment(@PathVariable String identifier, @PathVariable Long id, @RequestParam String comment) {
-        
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();                
+                
+        String username = userDetailsService.getCurrentUsername();        
                 
         postService.comment(username, id, comment);
         
         return "redirect:/profiles/" + identifier;
     }
-    
-    
+        
 }

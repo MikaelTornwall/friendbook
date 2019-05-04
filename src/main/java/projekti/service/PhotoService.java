@@ -29,10 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class PhotoService {
     
     @Autowired
-    private PhotoRepository photoRepository;
-    
-    @Autowired
-    private PhotoAlbumRepository photoAlbumRepository;
+    private PhotoRepository photoRepository;        
     
     @Autowired
     private UserRepository userRepository;
