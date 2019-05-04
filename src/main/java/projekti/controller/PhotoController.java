@@ -118,7 +118,7 @@ public class PhotoController {
                
         photoService.addPhoto(file, description, account);
         
-        return "redirect:/profiles/" + account.getIdentifier() + "/add";
+        return "redirect:/profiles/" + account.getIdentifier();
     }
     
     @PostMapping("/profiles/{identifier}/photos/{id}/like")
