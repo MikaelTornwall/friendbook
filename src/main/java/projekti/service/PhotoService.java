@@ -24,6 +24,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import projekti.config.DevelopmentSecurityConfiguration;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PhotoService {
@@ -40,6 +41,7 @@ public class PhotoService {
     @Autowired
     private CommentRepository commentRepository;
     
+    @Transactional
     public void addPhoto(MultipartFile file, String description, Account account) {                
         
         PhotoAlbum album = account.getPhotoAlbum();

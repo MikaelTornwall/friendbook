@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 import projekti.repository.UserRepository;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.transaction.annotation.Transactional;
 
 @Controller
 public class PhotoController {
@@ -109,6 +110,7 @@ public class PhotoController {
         return photoService.getPhoto(id);
     }
     
+    @Transactional
     @PostMapping("/profiles/{identifier}/photos/add")
     public String addPhoto(@RequestParam("file") MultipartFile file, @RequestParam String description, @PathVariable String identifier) {                                
         
