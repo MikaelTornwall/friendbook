@@ -21,8 +21,7 @@ public class Photo extends AbstractPersistable<Long> {
     
     @ManyToOne
     private PhotoAlbum photoAlbum;
-    
-    @Lob
+        
     private byte[] content;
     
     private String description;    
