@@ -11,13 +11,13 @@
         <div>
             <h2><i class="fas fa-cog"></i> Settings</h2>
             <div class="mt-4">
-                <a class="text-dark" th:href="@{/profiles/{identifier}/selectprofilepicture}"><i class="fas fa-user"></i> Change profile picture</a> 
+                <a class="text-dark" th:href="@{/profiles/{identifier}/selectprofilepicture (identifier=${myprofile})}"><i class="fas fa-user"></i> Change profile picture</a> 
                 <br/>
                 <br/>
-                <a class="text-dark" th:href="@{/profiles/{identifier}/photos/add}"><i class="fas fa-plus"></i> Add photos</a>                
+                <a class="text-dark" th:href="@{/profiles/{identifier}/photos/add (identifier=${myprofile})}"><i class="fas fa-plus"></i> Add photos</a>                
                 <br/>
                 <br/>
-                <a class="text-dark" th:href="@{/profiles/mikael/friendrequests}"><i class="fas fa-user-friends"></i> Manage friend requests</a>
+                <a class="text-dark" th:href="@{/profiles/mikael/friendrequests (identifier=${myprofile})}"><i class="fas fa-user-friends"></i> Manage friend requests</a>
                 </div>
         </div>
             </div>
