@@ -19,7 +19,7 @@
                 <div class="col-1 pt-5 mt-5 h1" th:if="${photos.isEmpty()}" ></div> -->
                 
                 <div class="col-6">        
-                    <div class="lead d-flex justify-content-center align-items-center" th:if="${photos.isEmpty()}" th:text="${profile + ' does not seem to have any photos yet'}"></div>                    
+                    <!--<div class="lead d-flex justify-content-center align-items-center" th:if="${photos.isEmpty()}" th:text="${profile + ' does not seem to have any photos yet'}"></div>-->
                     <div th:each="photo : ${photos}">
                         <a th:href="@{/profiles/{identifier}/photos/{id} (identifier=${profile}, id=${photo.id})}">
                             <img class="img-fluid" th:src="@{/profiles/{identifier}/photos/{id} (identifier=${profile}, id=${photo.id})}" th:alt="${photo.description}" />
