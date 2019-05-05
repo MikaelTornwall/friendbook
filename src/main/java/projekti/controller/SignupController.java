@@ -53,7 +53,7 @@ public class SignupController {
         account.setUsername(username);
         account.setName(name);
         account.setPassword(password);
-        account.setIdentifier(identifier);                
+        account.setIdentifier(username);                
         
         Wall wall = new Wall();
         wall.setOwner(account);
